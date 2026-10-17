@@ -1,0 +1,15 @@
+{
+  "name": "vedit-tools",
+  "private": true,
+  "type": "module",
+  "description": "Node-часть vedit: локальный Whisper (распознавание речи) и рендер моушн-графики через Chromium",
+  "dependencies": {
+    "@huggingface/transformers": "^3.7.0",
+    "sts-whisper-small": "1.0.0",
+    "@expo-google-fonts/montserrat": "^0.4.1",
+    "@expo-google-fonts/unbounded": "^0.4.1",
+    "@expo-google-fonts/russo-one": "^0.4.1",
+    "@expo-google-fonts/rubik": "^0.4.1",
+    "@expo-google-fonts/bebas-neue": "^0.4.1"
+  }
+}

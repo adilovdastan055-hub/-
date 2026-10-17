@@ -1,0 +1,9 @@
+# Исходники в input/ — через Git LFS (большие файлы)
+input/**/*.mp4 filter=lfs diff=lfs merge=lfs -text
+input/**/*.mov filter=lfs diff=lfs merge=lfs -text
+input/**/*.mkv filter=lfs diff=lfs merge=lfs -text
+input/**/*.webm filter=lfs diff=lfs merge=lfs -text
+input/**/*.m4v filter=lfs diff=lfs merge=lfs -text
+input/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
+input/**/*.wav filter=lfs diff=lfs merge=lfs -text
+input/**/*.m4a filter=lfs diff=lfs merge=lfs -text

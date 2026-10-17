@@ -1,0 +1,9 @@
+/* Общие правила для всех шаблонов: прозрачный фон, единицы — доли кадра, выход в конце */
+html, body { margin: 0; width: 100%; height: 100%; background: transparent; overflow: hidden; }
+* { box-sizing: border-box; }
+:root { --accent: #FFE600; --color: #FFFFFF; --D: 3s; --font: 'Montserrat'; }
+#wrap { position: absolute; inset: 0; animation: vOut .4s cubic-bezier(.6,0,.9,.4) both;
+        animation-delay: calc(var(--D) - .4s); }
+@keyframes vOut { to { opacity: 0; transform: scale(.94); filter: blur(6px); } }
+@keyframes popIn { 0% { transform: scale(0); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(40%); } to { opacity: 1; transform: none; } }

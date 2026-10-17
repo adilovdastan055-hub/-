@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css"><style>
+#wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: calc(var(--u) * 2); }
+.line { display: flex; flex-wrap: nowrap; overflow: hidden; padding: 0 .08em .05em; }
+.ch { display: inline-block; white-space: pre; font-family: var(--font); font-weight: 900; font-size: var(--size);
+      color: var(--color); text-transform: uppercase; line-height: 1.08; text-shadow: 0 .04em .12em rgba(0,0,0,.35);
+      animation: chIn .6s cubic-bezier(.2,.9,.25,1.15) both; }
+.ch.acc { color: var(--accent); }
+@keyframes chIn { from { transform: translateY(115%) rotate(10deg); opacity: 0; filter: blur(10px); }
+                  to { transform: none; opacity: 1; filter: none; } }
+.bar { height: calc(var(--u) * 1.2); width: calc(var(--u) * 46); background: var(--accent); border-radius: 99px;
+       transform-origin: left; animation: bar .6s cubic-bezier(.7,0,.2,1) both; animation-delay: .3s; }
+@keyframes bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.sub { font-family: 'Montserrat'; font-weight: 600; font-size: calc(var(--size) * .3); color: var(--color);
+       opacity: .9; letter-spacing: .32em; text-transform: uppercase; animation: fadeUp .6s cubic-bezier(.2,.8,.2,1) both;
+       animation-delay: .55s; }
+</style></head><body><div id="wrap"></div><script src="_base.js"></script><script>
+// params: title (\n — перенос строки, *слово* — акцентный цвет), subtitle, accent, color, font, size (доля ширины)
+window.setup = () => {
+  css('--u', U + 'px');
+  css('--size', ((P.size || (VERT ? 0.13 : 0.085)) * W) + 'px');
+  const wrap = document.getElementById('wrap');
+  let k = 0;
+  (P.title || 'TITLE').split('\n').forEach(lineText => {
+    const line = el('div', 'line', wrap);
+    let acc = false;
+    for (const c of lineText) {
+      if (c === '*') { acc = !acc; continue; }
+      const s = el('span', 'ch' + (acc ? ' acc' : ''), line, c);
+      s.style.animationDelay = (k++ * 0.035) + 's';
+    }
+  });
+  el('div', 'bar', wrap);
+  if (P.subtitle) el('div', 'sub', wrap, P.subtitle);
+};
+</script></body></html>

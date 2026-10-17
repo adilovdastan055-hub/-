@@ -1,0 +1,13 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css"><style>
+#wrap { animation: none; }
+.track { position: absolute; left: 0; right: 0; height: var(--h); background: rgba(255,255,255,.18); }
+.fill { height: 100%; width: 100%; background: var(--accent); transform-origin: left; animation: fill var(--D) linear both; }
+@keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+</style></head><body><div id="wrap"><div class="track"><div class="fill"></div></div></div>
+<script src="_base.js"></script><script>
+// params: position (top|bottom), thickness (доля высоты), accent. duration = длина всего ролика
+window.setup = () => {
+  css('--h', Math.max(4, (P.thickness ?? .006) * H) + 'px');
+  document.querySelector('.track').style[P.position === 'bottom' ? 'bottom' : 'top'] = '0';
+};
+</script></body></html>

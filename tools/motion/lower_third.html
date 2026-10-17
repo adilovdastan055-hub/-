@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css"><style>
+.box { position: absolute; left: var(--x); bottom: var(--y); display: flex; gap: calc(var(--u) * 1.6); }
+.stick { width: calc(var(--u) * 1); background: var(--accent); border-radius: 4px; transform-origin: bottom;
+         animation: grow .45s cubic-bezier(.7,0,.2,1) both; }
+@keyframes grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+.txt { display: flex; flex-direction: column; gap: calc(var(--u) * .6); }
+.name { font-family: var(--font); font-weight: 900; font-size: calc(var(--u) * 6.2); color: #111;
+        background: var(--color); padding: .08em .35em; line-height: 1.1; width: max-content;
+        animation: wipe .6s cubic-bezier(.7,0,.2,1) both; animation-delay: .2s; }
+.role { font-family: 'Montserrat'; font-weight: 600; font-size: calc(var(--u) * 3.4); color: var(--color);
+        background: rgba(0,0,0,.55); padding: .25em .6em; width: max-content; letter-spacing: .06em;
+        animation: wipe .6s cubic-bezier(.7,0,.2,1) both; animation-delay: .38s; }
+@keyframes wipe { from { clip-path: inset(0 100% 0 0); transform: translateX(-12%); } to { clip-path: inset(0 0 0 0); transform: none; } }
+</style></head><body><div id="wrap"><div class="box"><div class="stick"></div><div class="txt">
+<div class="name"></div><div class="role"></div></div></div></div>
+<script src="_base.js"></script><script>
+// params: name, role, accent, color, x (доля), y (доля от низа)
+window.setup = () => {
+  css('--u', U + 'px'); css('--x', ((P.x ?? 0.06) * W) + 'px'); css('--y', ((P.y ?? (VERT ? 0.24 : 0.12)) * H) + 'px');
+  document.querySelector('.name').textContent = P.name || 'Имя Фамилия';
+  const r = document.querySelector('.role'); if (P.role) r.textContent = P.role; else r.remove();
+};
+</script></body></html>

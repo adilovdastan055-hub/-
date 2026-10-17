@@ -1,0 +1,38 @@
+{
+  "output": {"path": "output/example.mp4", "size": "9:16", "fps": 30, "crf": 18},
+  "defaults": {"fit": "cover", "grade": "cinematic", "transition": {"type": "fade", "duration": 0.35}},
+
+  "clips": [
+    {"title": "ТЕСТ *МОНТАЖА*", "subtitle": "vedit", "duration": 1.6, "bg": "#0B0B12",
+     "anim": "zoom", "transition": {"type": "zoom", "duration": 0.4}},
+    {"src": "work/test/talk.mp4", "in": 0.0, "out": 3.6, "fit": "blur", "zoom": "in",
+     "transition": {"type": "whip", "duration": 0.3}},
+    {"src": "work/test/broll.mp4", "in": 1.0, "out": 3.0, "speed": 1.5, "zoom": "punch", "grade": "vivid",
+     "transition": {"type": "flash", "duration": 0.15}},
+    {"src": "work/test/talk.mp4", "in": 3.6, "out": 8.6, "zoom": {"from": 1.15, "to": 1.15},
+     "transition": {"type": "circleopen", "duration": 0.45}},
+    {"src": "work/test/photo.jpg", "duration": 2.5, "zoom": "out", "pan": "right", "transition": "cut"}
+  ],
+
+  "captions": {"style": "tiktok", "position": "lower"},
+
+  "overlays": [
+    {"text": "🔥 ПОНЕСЛАСЬ", "start": 1.4, "end": 3.0, "anim": "pop", "pos": "top", "size": 0.08, "color": "#FFE600"},
+    {"text": "ускорение x1.5", "start": 4.6, "end": 6.0, "anim": "typewriter", "pos": "upper", "size": 0.05,
+     "font": "Montserrat Bold"},
+    {"text": "ФИНАЛ", "start": 10.4, "end": 12.4, "anim": "drop", "pos": "center", "size": 0.14, "font": "Russo One"}
+  ],
+
+  "motion": [
+    {"template": "lower_third", "start": 1.6, "duration": 2.4, "params": {"name": "Имя Автора", "role": "Монтаж: vedit", "accent": "#FFE600"}},
+    {"template": "counter", "start": 6.0, "duration": 2.2, "params": {"from": 0, "to": 1000000, "suffix": "+", "label": "просмотров"}},
+    {"template": "callout", "start": 9.0, "duration": 1.8, "params": {"x": 0.62, "y": 0.42, "r": 0.16, "label": "Смотри сюда"}},
+    {"template": "cta", "start": 10.6, "duration": 2.2, "params": {"text": "Подписаться"}}
+  ],
+
+  "music": {"src": "work/test/music.wav", "volume": 0.35, "duck": true, "fade_out": 1.5},
+  "sfx": {"transitions": "whoosh", "volume": 0.5, "extra": [{"src": "impact", "at": 10.4, "volume": 0.7}]},
+  "vignette": 0.25,
+  "grain": 4,
+  "loudness": -14
+}

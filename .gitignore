@@ -1,0 +1,8 @@
+# рабочие и итоговые медиа не коммитим
+work/
+output/*
+!output/.gitkeep
+tools/node_modules/
+__pycache__/
+*.pyc
+.DS_Store

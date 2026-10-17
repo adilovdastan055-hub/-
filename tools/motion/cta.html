@@ -1,0 +1,32 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css"><style>
+.btn { position: absolute; left: 50%; top: var(--y); transform: translate(-50%, -50%); }
+.pill { position: relative; display: flex; align-items: center; gap: .45em; padding: .5em 1.1em; border-radius: 999px;
+        font-family: var(--font); font-weight: 800; font-size: calc(var(--u) * 6); color: #fff; background: var(--accent);
+        box-shadow: 0 .25em .8em rgba(0,0,0,.35); animation: popIn .5s cubic-bezier(.2,.9,.3,1.3) both, press .18s ease both;
+        animation-delay: 0s, 1.15s; white-space: nowrap; }
+@keyframes press { 50% { transform: scale(.9); } }
+.pill .done { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; border-radius: 999px;
+              background: #3a3a3a; color: #ddd; opacity: 0; animation: show .2s both; animation-delay: 1.25s; }
+@keyframes show { to { opacity: 1; } }
+.bell { display: inline-block; transform-origin: top center; animation: ring .9s ease-in-out both; animation-delay: .5s; }
+@keyframes ring { 0%,100% { transform: rotate(0); } 15% { transform: rotate(25deg); } 30% { transform: rotate(-22deg); }
+                  45% { transform: rotate(15deg); } 60% { transform: rotate(-10deg); } 75% { transform: rotate(5deg); } }
+.ring { position: absolute; inset: 0; border-radius: 999px; border: calc(var(--u) * .6) solid var(--accent);
+        opacity: 0; animation: ripple .7s ease-out both; animation-delay: 1.2s; }
+@keyframes ripple { from { opacity: .9; transform: scale(1); } to { opacity: 0; transform: scale(1.35, 1.8); } }
+.cursor { position: absolute; width: calc(var(--u) * 7); left: 62%; top: 62%; animation: move .65s cubic-bezier(.4,0,.2,1) both, tap .18s both;
+          animation-delay: .5s, 1.15s; filter: drop-shadow(0 .3em .4em rgba(0,0,0,.4)); }
+@keyframes move { from { transform: translate(140%, 160%); opacity: 0; } 30% { opacity: 1; } to { transform: none; opacity: 1; } }
+@keyframes tap { 50% { scale: .82; } }
+</style></head><body><div id="wrap"><div class="btn"><div class="pill"><span class="bell">🔔</span><span class="t"></span>
+<span class="done"></span><span class="ring"></span></div>
+<svg class="cursor" viewBox="0 0 24 24"><path d="M4 2l16 9-7 2-3 7z" fill="#fff" stroke="#111" stroke-width="1.4" stroke-linejoin="round"/></svg>
+</div></div><script src="_base.js"></script><script>
+// params: text, done_text, accent (цвет кнопки), y (доля высоты), font
+window.setup = () => {
+  css('--u', U + 'px'); css('--y', ((P.y ?? (VERT ? 0.7 : 0.75)) * H) + 'px');
+  if (!P.accent) css('--accent', '#FF0033');
+  document.querySelector('.t').textContent = P.text || 'Подписаться';
+  document.querySelector('.done').textContent = P.done_text || 'Вы подписаны ✓';
+};
+</script></body></html>
