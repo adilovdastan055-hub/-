@@ -52,7 +52,8 @@ window.setup = () => {
   if (P.deco !== false) {
     const cols = P.deco_colors || [P.accent || '#FFE600', '#FF3D7F', '#4D7CFF'];
     cols.forEach((c, i) => {
-      const d = el('div', 'deco', document.body);
+      const d = document.createElement('div'); d.className = 'deco';
+      document.body.insertBefore(d, wrap);  // пятна — под текстом
       const s = (30 + i * 12) * U;
       Object.assign(d.style, { width: s + 'px', height: s + 'px', background: c,
         left: [(-.1), .55, .1][i % 3] * W + 'px', top: [.08, .3, .7][i % 3] * H + 'px' });

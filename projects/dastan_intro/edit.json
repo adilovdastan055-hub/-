@@ -3,7 +3,7 @@
   "path": "output/dastan_intro.mp4",
   "size": "9:16",
   "fps": 30,
-  "crf": 18
+  "crf": 21
  },
  "defaults": {
   "fit": "cover",
@@ -381,6 +381,6 @@
   ]
  },
  "vignette": 0.3,
- "grain": 5,
+ "grain": 3,
  "loudness": -14
 }
