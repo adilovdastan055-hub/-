@@ -380,14 +380,15 @@ def render(spec_path, preview=False):
                   f"volume={float(ev.get('volume', 0.5))},adelay={ms}|{ms}[sfx{j}]")
         mix.append(f"[sfx{j}]")
         n_in += 1
-    lufs = float(spec.get("loudness", -14))
     if len(mix) > 1:
         fc.append(f"{''.join(mix)}amix=inputs={len(mix)}:normalize=0:duration=first[amixed]")
         achain = "[amixed]"
     else:
         achain = voice
-    fc.append(f"{achain}loudnorm=I={lufs}:TP=-1.5:LRA=11,aresample=48000,alimiter=limit=0.95,"
-              f"atrim=0:{total:.3f}[aout]")
+    # loudness: null — без нормализации (когда звук досводится отдельно)
+    norm = "" if spec.get("loudness", -14) is None else \
+        f"loudnorm=I={float(spec.get('loudness', -14))}:TP=-1.5:LRA=11,aresample=48000,alimiter=limit=0.95,"
+    fc.append(f"{achain}{norm}atrim=0:{total:.3f}[aout]")
 
     out = resolve(out_cfg.get("path", "output/final.mp4"))
     if preview:

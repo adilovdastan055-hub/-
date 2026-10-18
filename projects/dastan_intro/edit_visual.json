@@ -1,0 +1,416 @@
+{
+ "output": {
+  "path": "output/dastan_visual.mp4",
+  "size": "9:16",
+  "fps": 30,
+  "crf": 21
+ },
+ "defaults": {
+  "fit": "cover",
+  "grade": null
+ },
+ "clips": [
+  {
+   "src": "input/generated/vbg_00.mp4",
+   "in": 0,
+   "out": 1.31,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.07
+   },
+   "transition": {
+    "type": "flash",
+    "duration": 0.12
+   }
+  },
+  {
+   "src": "input/generated/vbg_01.mp4",
+   "in": 0,
+   "out": 1.74,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.07
+   },
+   "transition": {
+    "type": "zoom",
+    "duration": 0.2
+   }
+  },
+  {
+   "src": "input/generated/vbg_02.mp4",
+   "in": 0,
+   "out": 2.52,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.07
+   },
+   "transition": {
+    "type": "whip",
+    "duration": 0.2
+   }
+  },
+  {
+   "src": "input/generated/vbg_03.mp4",
+   "in": 0,
+   "out": 4.8,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.07
+   },
+   "transition": {
+    "type": "smoothup",
+    "duration": 0.2
+   }
+  },
+  {
+   "src": "input/generated/vbg_04.mp4",
+   "in": 0,
+   "out": 1.38,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.07
+   },
+   "transition": {
+    "type": "whip",
+    "duration": 0.2
+   }
+  },
+  {
+   "src": "input/generated/vbg_05.mp4",
+   "in": 0,
+   "out": 2.16,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.07
+   },
+   "transition": {
+    "type": "zoom",
+    "duration": 0.2
+   }
+  },
+  {
+   "src": "input/generated/vbg_06.mp4",
+   "in": 0,
+   "out": 6.02,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.07
+   },
+   "transition": {
+    "type": "glitch",
+    "duration": 0.2
+   }
+  },
+  {
+   "src": "input/generated/vbg_07.mp4",
+   "in": 0,
+   "out": 2.74,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.07
+   },
+   "transition": {
+    "type": "circle",
+    "duration": 0.2
+   }
+  },
+  {
+   "src": "input/generated/vbg_08.mp4",
+   "in": 0,
+   "out": 5.26,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.07
+   },
+   "transition": {
+    "type": "flash",
+    "duration": 0.12
+   }
+  },
+  {
+   "src": "input/generated/vbg_09.mp4",
+   "in": 0,
+   "out": 8.2,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.07
+   }
+  }
+ ],
+ "motion": [
+  {
+   "template": "kinetic",
+   "start": 0.0,
+   "duration": 1.11,
+   "params": {
+    "icon": "🔥",
+    "lines": [
+     "Всем",
+     "*привет!*"
+    ],
+    "word_times": [
+     0.35,
+     0.57
+    ],
+    "accent": "#FFD400",
+    "size": 0.14
+   }
+  },
+  {
+   "template": "kinetic",
+   "start": 1.11,
+   "duration": 1.54,
+   "params": {
+    "kicker": "Меня зовут",
+    "lines": [
+     "Дастан",
+     "*Адилов*"
+    ],
+    "word_times": [
+     0.52,
+     0.94
+    ],
+    "accent": "#FFE600",
+    "size": 0.13,
+    "delay": 0.1
+   }
+  },
+  {
+   "template": "kinetic",
+   "start": 2.65,
+   "duration": 2.32,
+   "params": {
+    "chips": [
+     "Маркетолог",
+     "Блогер",
+     "Мобилограф"
+    ],
+    "chip_times": [
+     0.15,
+     1.0,
+     1.55
+    ],
+    "accent": "#FFE600"
+   }
+  },
+  {
+   "template": "kinetic",
+   "start": 4.97,
+   "duration": 4.6,
+   "params": {
+    "kicker": "Моя стихия",
+    "lines": [
+     "Креатив",
+     "Технологии",
+     "*Контент*"
+    ],
+    "word_times": [
+     0.83,
+     1.43,
+     2.28
+    ],
+    "caption": "который *цепляет* с первых секунд",
+    "caption_time": 2.88,
+    "accent": "#00F0FF",
+    "size": 0.11,
+    "delay": 0.1
+   }
+  },
+  {
+   "template": "kinetic",
+   "start": 9.57,
+   "duration": 1.18,
+   "params": {
+    "icon": "📱",
+    "lines": [
+     "Снимаю",
+     "на *телефон*"
+    ],
+    "word_times": [
+     0.1,
+     0.4,
+     0.56
+    ],
+    "accent": "#FFE600",
+    "size": 0.12
+   }
+  },
+  {
+   "template": "kinetic",
+   "start": 10.75,
+   "duration": 1.96,
+   "params": {
+    "icon": "🚁",
+    "kicker": "Впечатляющие",
+    "lines": [
+     "Кадры",
+     "с *дрона*"
+    ],
+    "word_times": [
+     1.2,
+     1.6,
+     1.7
+    ],
+    "accent": "#FFE600",
+    "size": 0.12,
+    "delay": 0.45
+   }
+  },
+  {
+   "template": "kinetic",
+   "start": 12.71,
+   "duration": 5.82,
+   "params": {
+    "icon": "🤖",
+    "kicker": "Использую",
+    "lines": [
+     "Искусственный",
+     "*интеллект*"
+    ],
+    "word_times": [
+     1.09,
+     1.69
+    ],
+    "caption": "превращаю обычные идеи в *нечто особенное*",
+    "caption_time": 2.59,
+    "accent": "#00FFA3",
+    "size": 0.088,
+    "delay": 0.59
+   }
+  },
+  {
+   "template": "kinetic",
+   "start": 18.53,
+   "duration": 2.54,
+   "params": {
+    "kicker": "Видео — это",
+    "lines": [
+     "не просто",
+     "*картинка*"
+    ],
+    "word_times": [
+     1.12,
+     1.27,
+     1.54
+    ],
+    "accent": "#FF2D55",
+    "size": 0.12,
+    "delay": 0.37
+   }
+  },
+  {
+   "template": "kinetic",
+   "start": 21.07,
+   "duration": 5.06,
+   "params": {
+    "kicker": "а инструмент, который",
+    "flow": [
+     "Внимание",
+     "Эмоции",
+     "Рост бизнеса"
+    ],
+    "chip_times": [
+     1.28,
+     2.58,
+     4.08
+    ],
+    "accent": "#FFD400",
+    "delay": 0.13
+   }
+  },
+  {
+   "template": "kinetic",
+   "start": 26.13,
+   "duration": 8.2,
+   "params": {
+    "icon": "🚀",
+    "kicker": "Я",
+    "lines": [
+     "Дастан",
+     "*Адилов*"
+    ],
+    "word_times": [
+     0.5,
+     0.94
+    ],
+    "caption": "Создаю контент, который *выделяется*, и идеи, которые *работают*",
+    "caption_time": 1.52,
+    "accent": "#FFE600",
+    "size": 0.13,
+    "delay": 0.1
+   }
+  },
+  {
+   "template": "cta",
+   "start": 31.58,
+   "duration": 2.75,
+   "params": {
+    "text": "Подписаться",
+    "y": 0.86
+   }
+  },
+  {
+   "template": "progress",
+   "start": 0,
+   "duration": 34.33,
+   "params": {
+    "accent": "#FFE600",
+    "thickness": 0.005
+   }
+  }
+ ],
+ "sfx": {
+  "transitions": "whoosh",
+  "volume": 0.22,
+  "extra": [
+   {
+    "src": "impact",
+    "at": 1.11,
+    "volume": 0.6
+   },
+   {
+    "src": "pop",
+    "at": 2.8,
+    "volume": 0.35
+   },
+   {
+    "src": "pop",
+    "at": 3.65,
+    "volume": 0.35
+   },
+   {
+    "src": "pop",
+    "at": 4.2,
+    "volume": 0.35
+   },
+   {
+    "src": "pop",
+    "at": 22.35,
+    "volume": 0.35
+   },
+   {
+    "src": "pop",
+    "at": 23.65,
+    "volume": 0.35
+   },
+   {
+    "src": "pop",
+    "at": 25.15,
+    "volume": 0.35
+   },
+   {
+    "src": "click",
+    "at": 32.73,
+    "volume": 0.5
+   },
+   {
+    "src": "ding",
+    "at": 32.83,
+    "volume": 0.3
+   }
+  ]
+ },
+ "vignette": 0.3,
+ "grain": 3,
+ "loudness": null
+}
