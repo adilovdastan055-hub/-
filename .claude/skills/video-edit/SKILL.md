@@ -13,6 +13,7 @@ JSON-планом (`work/edit.json`), рендер детерминирован 
 ```bash
 bash scripts/setup.sh        # идемпотентно; ставит pip/npm-зависимости и шрифты
 python3 -m vedit doctor      # всё ли на месте
+python3 -m vedit music …     # сгенерировать фоновый трек без лицензий
 python3 -m vedit list        # все переходы, грейды, стили субтитров, анимации, шаблоны, звуки
 ```
 HuggingFace в облачном окружении закрыт — Whisper берётся из npm (`sts-whisper-small`), это нормально.
@@ -102,9 +103,23 @@ python3 -m vedit autocut beats input/clips/ --music input/track.mp3 --out work/e
   - `callout` — обвести и подписать: `x`, `y`, `r`, `label`, `lx`, `ly`
   - `cta` — кнопка «подписаться» с курсором и кликом: `text`, `done_text`, `accent`, `y`
   - `progress` — полоса прогресса (duration = длина ролика): `position`, `thickness`, `accent`
+  - `kinetic` — полноэкранная кинетическая типографика (основа роликов без съёмки): `icon` (эмодзи),
+    `kicker`, `lines` (массив строк, *слово* — плашка), `chips` (плашки по очереди), `flow` (цепочка ↓),
+    `caption` (*слово* — акцент), `size`, `word_step`, `chip_step`, `delay`, `deco`, `accent`
+  Эмодзи работают только в моушн-шаблонах (Chromium), не в `overlays`/субтитрах (libass).
   Новый шаблон = новый HTML в `tools/motion/` на CSS-анимациях (`_base.css`/`_base.js`; время
   управляется через `document.getAnimations()`, для JS-анимаций реализуй `window.seek(t)`).
 - **Звуки** (синтез, без внешних файлов): whoosh, swoosh, impact, pop, click, riser, ding.
+
+### Ролик без исходников (только текст/сценарий)
+
+1. Музыка: `python3 -m vedit music --bpm 120 --sections "intro:2,main:14,break:2,main:3" --style epic --out input/generated/music.wav`
+   (стили pop/epic/chill; при 120 BPM такт = 2 с; вывод — таймкоды секций, ставь «дроп» на смену сцены).
+2. Фоны: анимированные градиенты `ffmpeg -f lavfi -i "gradients=s=1080x1920:r=30:c0=…:c1=…:c2=…:n=3:speed=0.012:type=radial"`
+   — по одному на сцену, в `input/generated/`.
+3. Сцены — по 2 такта; длительность клипа = длина сцены + длительность перехода, тогда каждая склейка
+   попадает точно на такт. Текст — моушн `kinetic` со `start` = начало сцены.
+4. Пример: `projects/dastan_intro/edit.json`.
 
 ## 4. Рендер и самопроверка — всегда
 

@@ -49,6 +49,14 @@ def cmd_autocut(a):
     print(f"план: {out} ({len(plan['clips'])} клипов)")
 
 
+def cmd_music(a):
+    from .music import generate
+    out = resolve(a.out)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    info = generate(out, bpm=a.bpm, sections=a.sections, style=a.style, seed=a.seed)
+    print(json.dumps(info, ensure_ascii=False, indent=1))
+
+
 def cmd_list(a):
     from .motion import TEMPLATES
     from .render import GRADES, TRANSITION_ALIASES
@@ -126,6 +134,13 @@ def main():
     p.add_argument("--max-len", type=float)
     p.add_argument("--out", default="work/edit.json")
     p.set_defaults(f=cmd_autocut)
+    p = sp.add_parser("music", help="сгенерировать фоновый трек (синтез, без лицензий)")
+    p.add_argument("--bpm", type=int, default=120)
+    p.add_argument("--sections", default="intro:2,main:8,break:2,main:4,outro:2")
+    p.add_argument("--style", default="pop", choices=["pop", "epic", "chill"])
+    p.add_argument("--seed", type=int, default=7)
+    p.add_argument("--out", default="work/music.wav")
+    p.set_defaults(f=cmd_music)
     sp.add_parser("list", help="все переходы, грейды, стили, шаблоны").set_defaults(f=cmd_list)
     sp.add_parser("doctor", help="проверить окружение").set_defaults(f=cmd_doctor)
     a = ap.parse_args()

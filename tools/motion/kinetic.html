@@ -1,0 +1,105 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css"><style>
+#wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: calc(var(--u) * 3);
+        padding: 0 calc(var(--u) * 7); text-align: center; }
+.deco { position: absolute; border-radius: 50%; filter: blur(calc(var(--u) * 6)); opacity: .55;
+        animation: drift var(--D) linear both; }
+@keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(var(--dx), var(--dy)) scale(1.25); } }
+.icon { font-size: calc(var(--u) * 26); line-height: 1; filter: drop-shadow(0 calc(var(--u) * 2) calc(var(--u) * 3) rgba(0,0,0,.35));
+        animation: iconIn .7s cubic-bezier(.2,.9,.3,1.35) both, float 2.4s ease-in-out .7s infinite alternate; }
+@keyframes iconIn { from { transform: translateY(-60%) scale(.2) rotate(-25deg); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes float { to { transform: translateY(-6%) rotate(4deg); } }
+.kicker { font-family: 'Montserrat'; font-weight: 700; font-size: calc(var(--u) * 4.4); letter-spacing: .28em;
+          text-transform: uppercase; color: var(--accent); text-shadow: 0 .1em .4em rgba(0,0,0,.55); animation: fadeUp .5s cubic-bezier(.2,.8,.2,1) both; }
+.lines { display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * .6); }
+.line { display: flex; flex-wrap: wrap; justify-content: center; gap: 0 calc(var(--size) * .28); }
+.wm { display: inline-block; overflow: hidden; padding: .04em .02em .1em; }
+.w { display: inline-block; position: relative; font-family: var(--font); font-weight: 900; font-size: var(--size);
+     line-height: 1.02; color: var(--color); text-transform: uppercase; text-shadow: 0 .05em .14em rgba(0,0,0,.3);
+     animation: wIn .55s cubic-bezier(.2,.9,.25,1.1) both; }
+@keyframes wIn { from { transform: translateY(105%) skewY(8deg); } to { transform: none; } }
+.w.acc { color: #111; z-index: 0; padding: 0 .12em; }
+.w.acc::before { content: ''; position: absolute; inset: .06em -.02em .02em; background: var(--accent); z-index: -1;
+                 border-radius: .08em; transform-origin: left; animation: hl .45s cubic-bezier(.7,0,.2,1) both;
+                 animation-delay: inherit; }
+@keyframes hl { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.chips { display: flex; flex-direction: column; align-items: center; gap: calc(var(--u) * 2.2); }
+.chip { font-family: var(--font); font-weight: 900; font-size: calc(var(--u) * 8.4); text-transform: uppercase;
+        padding: .18em .6em; border-radius: .3em; color: #111; background: var(--color);
+        box-shadow: 0 .15em .4em rgba(0,0,0,.3); animation: chipIn .5s cubic-bezier(.2,.9,.3,1.4) both; }
+.chip:nth-child(3n+2) { background: var(--accent); }
+@keyframes chipIn { from { transform: scale(0) rotate(-8deg); opacity: 0; } to { transform: rotate(var(--rot)); opacity: 1; } }
+.caption { font-family: 'Montserrat'; font-weight: 600; font-size: calc(var(--u) * 5); line-height: 1.3; color: var(--color);
+           opacity: .95; max-width: 92%; text-wrap: balance; text-shadow: 0 .08em .3em rgba(0,0,0,.45); animation: fadeUp .6s cubic-bezier(.2,.8,.2,1) both; }
+.caption b { color: #111; background: var(--accent); font-weight: 800; padding: 0 .25em; border-radius: .2em;
+             text-shadow: none; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.arrow { font-family: var(--font); font-weight: 900; font-size: calc(var(--u) * 9); color: var(--accent);
+         animation: popIn .4s cubic-bezier(.2,.9,.3,1.4) both; }
+</style></head><body><div id="wrap"></div><script src="_base.js"></script><script>
+// params:
+//   icon      — эмодзи сверху (📱 🚁 🤖 🔥 🚀)
+//   kicker    — маленькая надпись над текстом
+//   lines     — массив строк; *слово* — акцентная плашка
+//   chips     — массив плашек, появляются по очереди (chip_step сек)
+//   flow      — массив слов-цепочка «А → Б → В», появляются по очереди
+//   caption   — подпись снизу; *слово* — акцентный цвет
+//   size      — кегль строк (доля ширины), deco — размытые цветные пятна на фоне (true/false)
+//   delay     — задержка начала (сек)
+window.setup = () => {
+  css('--u', U + 'px');
+  css('--size', ((P.size || 0.105) * W) + 'px');
+  const wrap = document.getElementById('wrap');
+  let t = P.delay || 0;
+  if (P.deco !== false) {
+    const cols = P.deco_colors || [P.accent || '#FFE600', '#FF3D7F', '#4D7CFF'];
+    cols.forEach((c, i) => {
+      const d = el('div', 'deco', document.body);
+      const s = (30 + i * 12) * U;
+      Object.assign(d.style, { width: s + 'px', height: s + 'px', background: c,
+        left: [(-.1), .55, .1][i % 3] * W + 'px', top: [.08, .3, .7][i % 3] * H + 'px' });
+      d.style.setProperty('--dx', [1, -1, .6][i % 3] * 12 * U + 'px');
+      d.style.setProperty('--dy', [.8, 1, -1][i % 3] * 10 * U + 'px');
+    });
+  }
+  if (P.icon) { const i = el('div', 'icon', wrap, P.icon); i.style.animationDelay = `${t}s, ${t + .7}s`; t += .25; }
+  if (P.kicker) { const k = el('div', 'kicker', wrap, P.kicker); k.style.animationDelay = t + 's'; t += .15; }
+  if (P.lines) {
+    const box = el('div', 'lines', wrap);
+    P.lines.forEach(lt => {
+      const line = el('div', 'line', box);
+      lt.split(' ').filter(Boolean).forEach(word => {
+        const acc = word.startsWith('*') && word.endsWith('*');
+        const m = el('span', 'wm', line);
+        const w = el('span', 'w' + (acc ? ' acc' : ''), m, word.replace(/\*/g, ''));
+        w.style.animationDelay = t + 's';
+        t += P.word_step ?? .09;
+      });
+    });
+    t += .1;
+  }
+  if (P.chips) {
+    const box = el('div', 'chips', wrap);
+    P.chips.forEach((c, i) => {
+      const ch = el('div', 'chip', box, c);
+      ch.style.setProperty('--rot', [-3, 2.5, -1.5, 3][i % 4] + 'deg');
+      ch.style.animationDelay = t + 's';
+      t += P.chip_step ?? .55;
+    });
+  }
+  if (P.flow) {
+    const box = el('div', 'chips', wrap);
+    P.flow.forEach((c, i) => {
+      if (i) { const a = el('div', 'arrow', box, '↓'); a.style.animationDelay = t + 's'; t += .2; }
+      const ch = el('div', 'chip', box, c);
+      ch.style.setProperty('--rot', '0deg');
+      ch.style.animationDelay = t + 's';
+      t += P.chip_step ?? .45;
+    });
+  }
+  if (P.caption) {
+    const c = el('div', 'caption', wrap);
+    c.innerHTML = P.caption.replace(/[&<>]/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[s]))
+                           .replace(/\*([^*]+)\*/g, '<b>$1</b>');
+    c.style.animationDelay = (t + .05) + 's';
+  }
+};
+</script></body></html>

@@ -28,7 +28,8 @@
 | Цвет | cinematic, teal&orange, warm, cool, vivid, moody, film, b/w, свои LUT (.cube), виньетка, зерно, леттербокс |
 | Субтитры | TikTok-стиль с подсветкой слова, neon, karaoke, clean, minimal — синхронно с монтажом |
 | Титры | pop, zoom, drop, slide, typewriter, blur-in; акцентные слова; плашки |
-| Моушн-графика | кинетический заголовок, плашка имени, счётчик, выноска со стрелкой, кнопка «подписаться», прогресс-бар (HTML/CSS → прозрачное видео) |
+| Моушн-графика | кинетический заголовок, плашка имени, счётчик, выноска со стрелкой, кнопка «подписаться», прогресс-бар, полноэкранная кинетическая типографика с эмодзи (HTML/CSS → прозрачное видео) |
+| Музыка | генератор собственных треков (pop / epic / chill, любой BPM и структура) — без авторских прав |
 | Звук | музыка с автоприглушением под голос, whoosh/impact/riser/pop/ding, нормализация −14 LUFS |
 | Автонарезка | вырезать паузы из «говорящей головы»; клип-монтаж в бит музыки |
 | AI (Higgsfield) | генерация B-roll, апскейл до 4K, удаление фона, дубляж — по запросу |
@@ -45,6 +46,7 @@ python3 -m vedit autocut silence input/talk.mp4 --out work/edit.json
 python3 -m vedit autocut beats input/ --music input/track.mp3 --out work/edit.json
 python3 -m vedit render work/edit.json --preview   # черновик
 python3 -m vedit render work/edit.json             # финал → output/
+python3 -m vedit music --bpm 120 --out input/generated/music.wav   # свой трек
 bash scripts/demo.sh                        # самопроверка на сгенерированных тестовых роликах
 ```
 
