@@ -44,11 +44,15 @@
 //   caption   — подпись снизу; *слово* — акцентный цвет
 //   size      — кегль строк (доля ширины), deco — размытые цветные пятна на фоне (true/false)
 //   delay     — задержка начала (сек)
+//   word_times / chip_times / caption_time — моменты появления (сек от начала шаблона) для синхрона с голосом
 window.setup = () => {
   css('--u', U + 'px');
   css('--size', ((P.size || 0.105) * W) + 'px');
   const wrap = document.getElementById('wrap');
   let t = P.delay || 0;
+  // синхрон с голосом: явные моменты появления (сек от начала шаблона) перекрывают авто-шаг
+  let wi = 0, ci = 0;
+  const at = (arr, i, auto) => (arr && arr[i] != null ? arr[i] : auto);
   if (P.deco !== false) {
     const cols = P.deco_colors || [P.accent || '#FFE600', '#FF3D7F', '#4D7CFF'];
     cols.forEach((c, i) => {
@@ -71,8 +75,9 @@ window.setup = () => {
         const acc = word.startsWith('*') && word.endsWith('*');
         const m = el('span', 'wm', line);
         const w = el('span', 'w' + (acc ? ' acc' : ''), m, word.replace(/\*/g, ''));
-        w.style.animationDelay = t + 's';
-        t += P.word_step ?? .09;
+        const wt = at(P.word_times, wi++, t);
+        w.style.animationDelay = wt + 's';
+        t = wt + (P.word_step ?? .09);
       });
     });
     t += .1;
@@ -82,25 +87,27 @@ window.setup = () => {
     P.chips.forEach((c, i) => {
       const ch = el('div', 'chip', box, c);
       ch.style.setProperty('--rot', [-3, 2.5, -1.5, 3][i % 4] + 'deg');
-      ch.style.animationDelay = t + 's';
-      t += P.chip_step ?? .55;
+      const ct = at(P.chip_times, ci++, t);
+      ch.style.animationDelay = ct + 's';
+      t = ct + (P.chip_step ?? .55);
     });
   }
   if (P.flow) {
     const box = el('div', 'chips', wrap);
     P.flow.forEach((c, i) => {
-      if (i) { const a = el('div', 'arrow', box, '↓'); a.style.animationDelay = t + 's'; t += .2; }
+      const ct = at(P.chip_times, ci++, t + (i ? .2 : 0));
+      if (i) { const a = el('div', 'arrow', box, '↓'); a.style.animationDelay = Math.max(ct - .2, 0) + 's'; }
       const ch = el('div', 'chip', box, c);
       ch.style.setProperty('--rot', '0deg');
-      ch.style.animationDelay = t + 's';
-      t += P.chip_step ?? .45;
+      ch.style.animationDelay = ct + 's';
+      t = ct + (P.chip_step ?? .45);
     });
   }
   if (P.caption) {
     const c = el('div', 'caption', wrap);
     c.innerHTML = P.caption.replace(/[&<>]/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[s]))
                            .replace(/\*([^*]+)\*/g, '<b>$1</b>');
-    c.style.animationDelay = (t + .05) + 's';
+    c.style.animationDelay = (P.caption_time ?? t + .05) + 's';
   }
 };
 </script></body></html>

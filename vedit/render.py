@@ -324,6 +324,18 @@ def render(spec_path, preview=False):
     fc.append(f"{vchain}format=yuv420p[vout]")
 
     # --- звук ---
+    has_voice = any("src" in c and not c.get("mute") for c in clips)
+    vo = spec.get("voiceover")
+    if vo:  # закадровый голос: отдельная дорожка поверх звука клипов
+        inputs += ["-i", resolve(vo["src"])]
+        ms = int(float(vo.get("start", 0)) * 1000)
+        fc.append(f"[{n_in}:a]aresample=48000,aformat=channel_layouts=stereo,"
+                  f"{_atempo(float(vo['speed'])) + ',' if vo.get('speed') else ''}"
+                  f"volume={float(vo.get('volume', 1.0))},adelay={ms}|{ms},apad[vo]")
+        fc.append(f"{cur_a}[vo]amix=inputs=2:normalize=0:duration=first[withvo]")
+        cur_a = "[withvo]"
+        n_in += 1
+        has_voice = True
     mix = [cur_a]
     voice = cur_a
     music = spec.get("music")
@@ -336,7 +348,7 @@ def render(spec_path, preview=False):
         mf = (f"[{mi}:a]atrim=start={m_start},asetpts=PTS-STARTPTS,aresample=48000,"
               f"aformat=channel_layouts=stereo,atrim=0:{total:.3f},volume={float(music.get('volume', 0.3))},"
               f"afade=t=in:d={fi},afade=t=out:st={max(total - fo, 0):.3f}:d={fo}")
-        if music.get("duck", True) and any("src" in c and not c.get("mute") for c in clips):
+        if music.get("duck", True) and has_voice:
             fc.append(f"{cur_a}asplit=2[voice][sc]")
             fc.append(f"{mf}[mus]")
             fc.append("[mus][sc]sidechaincompress=threshold=0.02:ratio=10:attack=15:release=350:makeup=1[mduck]")
