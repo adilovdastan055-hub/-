@@ -115,7 +115,7 @@ window.setup = () => {
 
   // 1. «Так, вот дошёл до площади Батыр қыздар»
   let m = scene(0, 4.55, 'dark', 'Дошёл до площади', 'Батыр <span class="acc">қыздар</span>', { bigAt: 2.5, ul: true });
-  let c = A(row(m, 62), 'pop', .9, .6);
+  let c = A(row(m, 62), 'pop', .9, .6); c.style.width = 'auto';
   c.innerHTML = `${badge('pin', '#FF7A2F')}<div style="flex:1;text-align:left;white-space:nowrap"><div class="label">финиш маршрута</div>
     <div class="dim" style="font-size:${3.2 * u}px">площадь · памятник</div></div>
     <div class="pill" style="font-size:${3.2 * u}px">${ic('check', 3.6 * u, '#0B1A15')}дошёл</div>`;
