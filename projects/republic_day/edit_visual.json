@@ -1,0 +1,330 @@
+{
+ "output": {
+  "path": "output/republic_day_visual.mp4",
+  "size": "9:16",
+  "fps": 30,
+  "crf": 20
+ },
+ "defaults": {
+  "fit": "cover",
+  "grade": null
+ },
+ "clips": [
+  {
+   "src": "input/generated/republic_day/bg_00.mp4",
+   "in": 0,
+   "out": 2.45,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.06
+   },
+   "transition": {
+    "type": "flash",
+    "duration": 0.14
+   }
+  },
+  {
+   "src": "input/generated/republic_day/bg_01.mp4",
+   "in": 0,
+   "out": 4.2,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.06
+   },
+   "transition": {
+    "type": "smoothup",
+    "duration": 0.25
+   }
+  },
+  {
+   "src": "input/generated/republic_day/bg_02.mp4",
+   "in": 0,
+   "out": 2.8,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.06
+   },
+   "transition": {
+    "type": "zoom",
+    "duration": 0.25
+   }
+  },
+  {
+   "src": "input/generated/republic_day/bg_03.mp4",
+   "in": 0,
+   "out": 2.4,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.06
+   },
+   "transition": {
+    "type": "circle",
+    "duration": 0.25
+   }
+  },
+  {
+   "src": "input/generated/republic_day/bg_04.mp4",
+   "in": 0,
+   "out": 4.1,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.06
+   },
+   "transition": {
+    "type": "smoothup",
+    "duration": 0.25
+   }
+  },
+  {
+   "src": "input/generated/republic_day/bg_05.mp4",
+   "in": 0,
+   "out": 4.55,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.06
+   },
+   "transition": {
+    "type": "flash",
+    "duration": 0.14
+   }
+  },
+  {
+   "src": "input/generated/republic_day/bg_06.mp4",
+   "in": 0,
+   "out": 5.4,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.06
+   }
+  }
+ ],
+ "motion": [
+  {
+   "template": "kinetic",
+   "start": 0.0,
+   "duration": 2.2,
+   "params": {
+    "accent": "#FFC61A",
+    "deco_colors": [
+     "#FFC61A",
+     "#00B5E2",
+     "#0B4FA8"
+    ],
+    "icon": "🇰🇿",
+    "lines": [
+     "Құрметті",
+     "*қазақстандықтар!*"
+    ],
+    "word_times": [
+     0.35,
+     0.99
+    ],
+    "size": 0.064
+   }
+  },
+  {
+   "template": "kinetic",
+   "start": 2.2,
+   "duration": 3.95,
+   "params": {
+    "accent": "#FFC61A",
+    "deco_colors": [
+     "#FFC61A",
+     "#00B5E2",
+     "#0B4FA8"
+    ],
+    "kicker": "Баршаңызды",
+    "lines": [
+     "Республика",
+     "*күнімен!*"
+    ],
+    "word_times": [
+     1.01,
+     1.79
+    ],
+    "caption": "Шын жүректен *құттықтаймын!*",
+    "caption_time": 2.55,
+    "size": 0.1,
+    "delay": 0.13
+   }
+  },
+  {
+   "template": "kinetic",
+   "start": 6.15,
+   "duration": 2.55,
+   "params": {
+    "accent": "#FFC61A",
+    "deco_colors": [
+     "#FFC61A",
+     "#00B5E2",
+     "#0B4FA8"
+    ],
+    "icon": "🕊️",
+    "lines": [
+     "Еліміз *аман*",
+     "жұртымыз *тыныш*"
+    ],
+    "word_times": [
+     0.14,
+     0.68,
+     1.36,
+     1.88
+    ],
+    "size": 0.085
+   }
+  },
+  {
+   "template": "kinetic",
+   "start": 8.7,
+   "duration": 2.15,
+   "params": {
+    "accent": "#FFC61A",
+    "deco_colors": [
+     "#FFC61A",
+     "#00B5E2",
+     "#0B4FA8"
+    ],
+    "kicker": "Тәуелсіздігіміз",
+    "lines": [
+     "*тұғырлы*",
+     "болсын!"
+    ],
+    "word_times": [
+     1.03,
+     1.41
+    ],
+    "size": 0.12,
+    "delay": 0.15
+   }
+  },
+  {
+   "template": "kinetic",
+   "start": 10.85,
+   "duration": 3.85,
+   "params": {
+    "accent": "#FFC61A",
+    "deco_colors": [
+     "#FFC61A",
+     "#00B5E2",
+     "#0B4FA8"
+    ],
+    "icon": "🏡",
+    "kicker": "Әр шаңыраққа",
+    "chips": [
+     "Бақ-береке",
+     "Молшылық",
+     "Қуаныш"
+    ],
+    "chip_times": [
+     1.04,
+     2.12,
+     2.74
+    ],
+    "delay": 0.16
+   }
+  },
+  {
+   "template": "kinetic",
+   "start": 14.7,
+   "duration": 4.3,
+   "params": {
+    "accent": "#FFC61A",
+    "deco_colors": [
+     "#FFC61A",
+     "#00B5E2",
+     "#0B4FA8"
+    ],
+    "icon": "🇰🇿",
+    "lines": [
+     "Қазақстанымыз",
+     "*көркейіп,*"
+    ],
+    "word_times": [
+     0.17,
+     0.97
+    ],
+    "caption": "Көк туымыз әрдайым *биікте* желбіресін!",
+    "caption_time": 1.77,
+    "size": 0.082
+   }
+  },
+  {
+   "template": "kinetic",
+   "start": 19.0,
+   "duration": 5.4,
+   "params": {
+    "accent": "#FFC61A",
+    "deco_colors": [
+     "#FFC61A",
+     "#00B5E2",
+     "#0B4FA8"
+    ],
+    "icon": "✨",
+    "kicker": "Ізгі тілекпен",
+    "lines": [
+     "Дастан",
+     "*Адилов*"
+    ],
+    "word_times": [
+     1.27,
+     1.71
+    ],
+    "caption": "*25 қазан* — Республика күні құтты болсын!",
+    "caption_time": 2.65,
+    "size": 0.13,
+    "delay": 0.19
+   }
+  },
+  {
+   "template": "progress",
+   "start": 0,
+   "duration": 24.4,
+   "params": {
+    "accent": "#FFC61A",
+    "thickness": 0.005
+   }
+  }
+ ],
+ "music": {
+  "src": "input/generated/republic_day/music.wav",
+  "volume": 0.35,
+  "duck": false,
+  "fade_in": 0.3,
+  "fade_out": 2.0,
+  "loop": false
+ },
+ "sfx": {
+  "transitions": "whoosh",
+  "volume": 0.2,
+  "extra": [
+   {
+    "src": "pop",
+    "at": 11.89,
+    "volume": 0.3
+   },
+   {
+    "src": "pop",
+    "at": 12.97,
+    "volume": 0.3
+   },
+   {
+    "src": "pop",
+    "at": 13.59,
+    "volume": 0.3
+   },
+   {
+    "src": "riser",
+    "at": 18.95,
+    "volume": 0.25
+   },
+   {
+    "src": "ding",
+    "at": 21.65,
+    "volume": 0.3
+   }
+  ]
+ },
+ "vignette": 0.3,
+ "grain": 3,
+ "loudness": null
+}
