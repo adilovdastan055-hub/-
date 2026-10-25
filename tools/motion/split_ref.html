@@ -1,0 +1,254 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css"><style>
+/* Сплит-экран в стиле «эксперт + инфографика»: сверху сцены с графикой на градиенте,
+   снизу — окно (дыра в фоне), сквозь которое видно видео спикера; между ними строка субтитров. */
+:root { --accent: #3EE6B0; --font: 'Inter'; }
+#wrap { animation: none; }
+#bg { position: absolute; inset: 0; }
+.bgl { position: absolute; inset: 0; opacity: 0; }
+.card { position: absolute; border-radius: var(--r); border: calc(var(--u) * .3) solid rgba(255,255,255,.14);
+        box-shadow: 0 0 calc(var(--u) * 6) rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.04); }
+.scene { position: absolute; left: 0; right: 0; top: 0; height: 58%; display: flex; flex-direction: column;
+         align-items: center; text-align: center; opacity: 0; padding-top: 15%; }
+.small { font-family: var(--font); font-weight: 700; font-size: calc(var(--u) * 5.2); line-height: 1.15; color: #fff;
+         letter-spacing: -.01em; padding: 0 8%; }
+.big { font-family: var(--font); font-weight: 900; font-size: calc(var(--u) * 11.5); line-height: 1.02; color: #fff;
+       letter-spacing: -.035em; margin-top: calc(var(--u) * 1); padding: 0 5%; position: relative; }
+.big .acc, .small .acc { color: var(--accent); }
+.big.ul::after { content: ''; position: absolute; left: 8%; right: 8%; bottom: -.04em; height: .07em; border-radius: .05em;
+                 background: #FF7A2F; transform-origin: left; animation: inherit; }
+.light .small, .light .big { color: #121514; }
+.mid { zoom: 1.35; margin-top: calc(var(--u) * 5); position: relative; display: flex; justify-content: center; align-items: center; gap: calc(var(--u) * 2.4); }
+.glass { background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04)); border: 1px solid rgba(255,255,255,.14);
+         border-radius: calc(var(--u) * 3); box-shadow: 0 calc(var(--u) * 2) calc(var(--u) * 5) rgba(0,0,0,.35);
+         backdrop-filter: blur(6px); }
+.label { font-family: var(--font); font-weight: 700; color: #fff; font-size: calc(var(--u) * 3.6); }
+.dim { font-family: var(--font); color: rgba(255,255,255,.6); font-weight: 600; font-size: calc(var(--u) * 3.8); }
+.pill { font-family: var(--font); font-weight: 800; font-size: calc(var(--u) * 3.6); color: #0B1A15; background: var(--accent);
+        border-radius: 999px; padding: .45em 1.1em; box-shadow: 0 0 calc(var(--u) * 4) rgba(62,230,176,.45); display: inline-flex; gap: .4em; align-items: center; }
+svg { overflow: visible; }
+
+@keyframes up { from { opacity: 0; transform: translateY(35%); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes pop { 0% { opacity: 0; transform: scale(.4); } 65% { opacity: 1; transform: scale(1.08); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+#cap { position: absolute; left: 50%; transform: translate(-50%, -50%); white-space: nowrap; font-family: var(--font);
+       font-weight: 700; font-size: calc(var(--u) * 3.3); color: #fff; padding: .42em .9em; border-radius: .6em;
+       background: rgba(10,14,13,.55); border: 1px solid rgba(255,255,255,.10); }
+#cap span { color: rgba(255,255,255,.45); margin: 0 .13em; position: relative; }
+#cap span.on { color: #fff; }
+#cap span.cur { color: #fff; }
+#cap span.cur::after { content: ''; position: absolute; left: 0; right: 0; bottom: -.12em; height: .12em; border-radius: .1em; background: #FF7A2F; }
+</style></head><body><div id="bg"></div><div id="wrap"></div><div id="cap"></div><script src="_base.js"></script><script>
+// params: words — [[слово, start, end], …]; card — [x, y, w] в долях кадра (окно с видео до низа кадра)
+const S = [];            // сцены: {el, a, b}
+const BG = [];           // фоны: {el, a}
+let WORDS = [], GROUPS = [], CNT = [];
+const $ = (tag, cls, parent, html) => { const e = document.createElement(tag); if (cls) e.className = cls;
+  if (html != null) e.innerHTML = html; parent.appendChild(e); return e; };
+const A = (e, name, t, dur = .55, ease = 'cubic-bezier(.2,.9,.25,1.05)') => {
+  e.style.animation = `${name} ${dur}s ${ease} ${t}s both`; return e; };
+const BGS = {
+  dark:   'radial-gradient(120% 60% at 15% 0%, #3B2416 0%, rgba(59,36,22,0) 60%), radial-gradient(110% 55% at 70% 55%, #0E4A3A 0%, rgba(14,74,58,0) 70%), #0A0F0E',
+  green:  'radial-gradient(120% 70% at 50% 35%, #0F5A45 0%, #0A2E25 55%, #07150F 100%)',
+  light:  'radial-gradient(90% 50% at 85% 20%, #BFF5E2 0%, rgba(191,245,226,0) 70%), linear-gradient(180deg, #F4F6F5, #E9EEEC)',
+  orange: 'radial-gradient(120% 60% at 50% 15%, #7A3510 0%, #3A1A0A 55%, #120A06 100%)',
+  night:  'radial-gradient(100% 60% at 50% 30%, #13312A 0%, #0A1311 60%, #060908 100%)',
+  teal:   'radial-gradient(120% 70% at 50% 25%, #12806A 0%, #0B3D33 55%, #061712 100%)',
+};
+function bg(kind, a) { const e = $('div', 'bgl', document.getElementById('bg')); e.style.background = BGS[kind];
+  A(e, 'fadein', a, .45, 'ease'); BG.push(e); }
+function scene(a, b, kind, small, big, opts = {}) {
+  bg(kind, a);
+  const s = $('div', 'scene' + (kind === 'light' ? ' light' : ''), document.getElementById('wrap'));
+  S.push({ el: s, a, b });
+  if (small) A($('div', 'small', s, small), 'up', a + .05);
+  if (big) { const g = A($('div', 'big' + (opts.ul ? ' ul' : ''), s, big), 'up', opts.bigAt ?? a + .15, .6); }
+  return $('div', 'mid', s);
+}
+const ICON = {
+  globe: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.2 3 14.8 0 18M12 3c-3 3.2-3 14.8 0 18"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/></svg>',
+  leaf: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14z"/><path d="M5 19l7-7"/></svg>',
+  wave: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 9c3-3 6 3 9 0s6 3 9 0M3 15c3-3 6 3 9 0s6 3 9 0"/></svg>',
+  yin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 3a4.5 4.5 0 0 1 0 9a4.5 4.5 0 0 0 0 9" /><circle cx="12" cy="7.5" r="1" fill="currentColor"/><circle cx="12" cy="16.5" r="1"/></svg>',
+  eye: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>',
+  inf: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 12c-2-2.6-3.6-4-5.5-4a4 4 0 0 0 0 8c1.9 0 3.5-1.4 5.5-4zm0 0c2 2.6 3.6 4 5.5 4a4 4 0 0 0 0-8c-1.9 0-3.5 1.4-5.5 4z"/></svg>',
+};
+const ic = (name, size, color = '#fff') => `<span style="display:inline-flex;width:${size}px;height:${size}px;color:${color}">${ICON[name]}</span>`;
+
+window.setup = () => {
+  css('--u', U + 'px');
+  const [cx, cy, cw] = P.card || [.09, .62, .82];
+  const R = W * .05; css('--r', R + 'px');
+  const X = cx * W, Y = cy * H, CW = cw * W, CH = H - Y + R * 2;
+  // дыра в фоне под видео (скругление сверху; низ уходит за кадр)
+  const hole = `M${X + R} ${Y} H${X + CW - R} A${R} ${R} 0 0 1 ${X + CW} ${Y + R} V${Y + CH} H${X} V${Y + R} A${R} ${R} 0 0 1 ${X + R} ${Y} Z`;
+  document.getElementById('bg').style.clipPath = `path(evenodd, "M0 0 H${W} V${H} H0 Z ${hole}")`;
+  const card = $('div', 'card', document.getElementById('wrap'));
+  Object.assign(card.style, { left: X + 'px', top: Y + 'px', width: CW + 'px', height: CH + 'px' });
+  const cap = document.getElementById('cap'); cap.style.top = (Y - U * 5.2) + 'px';
+
+  // субтитры: фразы по знакам препинания, не длиннее 5 слов
+  WORDS = (P.words || []).map(([w, s, e]) => ({ w, s, e }));
+  let g = [];
+  WORDS.forEach((w, i) => { g.push(i); if (/[.,!?]$/.test(w.w) || g.length >= 5) { GROUPS.push(g); g = []; } });
+  if (g.length) GROUPS.push(g);
+
+  const u = U;
+  // 1. «Мне этот мир уже абсолютно понятен»
+  let m = scene(0, 2.0, 'dark', 'Мне этот мир уже<br>абсолютно', 'понятен', { bigAt: 1.3, ul: true });
+  let c = A($('div', 'glass', m), 'pop', .25, .6);
+  Object.assign(c.style, { width: 62 * u + 'px', padding: `${3.2 * u}px ${4 * u}px`, display: 'flex', gap: 3 * u + 'px', alignItems: 'center' });
+  c.innerHTML = `<div style="width:${12 * u}px;height:${12 * u}px;border-radius:${3 * u}px;background:rgba(62,230,176,.14);display:flex;align-items:center;justify-content:center;flex:none">${ic('globe', 7.5 * u, '#3EE6B0')}</div>
+    <div style="flex:1;text-align:left"><div class="label">мир изучен</div>
+    <div style="height:${1.6 * u}px;border-radius:9px;background:rgba(255,255,255,.1);margin-top:${1.4 * u}px;overflow:hidden">
+    <div class="bar" style="height:100%;width:100%;background:linear-gradient(90deg,#FF7A2F,#3EE6B0);transform-origin:left"></div></div></div>
+    <div class="label cnt" style="color:#3EE6B0;font-size:${5 * u}px">0%</div>`;
+  A(c.querySelector('.bar'), 'grow', .45, 1.4, 'cubic-bezier(.4,0,.2,1)');
+  CNT.push({ el: c.querySelector('.cnt'), a: .45, b: 1.85, from: 0, to: 100, fmt: v => Math.round(v) + '%' });
+
+  // 2. «Я ищу только одного»
+  m = scene(2.0, 3.12, 'night', 'Я ищу только', 'одного', { bigAt: 2.4 });
+  c = A($('div', 'glass', m), 'pop', 2.05, .5);
+  Object.assign(c.style, { width: 70 * u + 'px', padding: `${2.8 * u}px ${3.6 * u}px`, display: 'flex', gap: 2.4 * u + 'px', alignItems: 'center', borderRadius: 99 * u + 'px' });
+  c.innerHTML = `${ic('search', 5.5 * u, '#3EE6B0')}<div class="label typed" style="text-align:left;flex:1;font-size:${4.4 * u}px"></div>`;
+  CNT.push({ el: c.querySelector('.typed'), a: 2.1, b: 2.85, text: 'смысл, покой… одно', fmt: null });
+
+  // 3. «Покоя, умиротворения и вот этой вот гармонии»
+  m = scene(3.12, 6.1, 'green', 'Я ищу только', 'покой', { bigAt: 3.16 });
+  [['leaf', 'покой', 3.18], ['wave', 'умиротво­рение', 3.9], ['yin', 'гармония', 5.24]].forEach(([ico, txt, t], i, arr) => {
+    const k = A($('div', 'glass', m), 'pop', t, .5);
+    Object.assign(k.style, { width: 21 * u + 'px', padding: `${2.6 * u}px ${1 * u}px`, textAlign: 'center' });
+    k.innerHTML = `<div style="margin:0 auto ${1.6 * u}px;width:${10 * u}px;height:${10 * u}px;border-radius:50%;background:rgba(62,230,176,.15);display:flex;align-items:center;justify-content:center">${ic(ico, 6 * u, '#3EE6B0')}</div><div class="label" style="font-size:${3.3 * u}px;hyphens:manual">${txt}</div>`;
+    const next = arr[i + 1] ? arr[i + 1][2] : 6.1;
+    CNT.push({ el: k, a: t, b: next, hl: true });
+  });
+
+  // 4. «от слияния с бесконечным вечным» — светлая сцена
+  m = scene(6.1, 8.35, 'light', 'от слияния с', 'бесконечным', { bigAt: 6.95 });
+  m.style.height = 26 * u + 'px'; m.style.width = '100%';
+  const c1 = $('div', '', m), c2 = $('div', '', m);
+  [[c1, '#121514', -1], [c2, '#3EE6B0', 1]].forEach(([e, col, sgn]) => {
+    Object.assign(e.style, { position: 'absolute', width: 22 * u + 'px', height: 22 * u + 'px', borderRadius: '50%', background: col,
+      left: '50%', top: '50%', marginLeft: -11 * u + 'px', marginTop: -11 * u + 'px', mixBlendMode: 'multiply', opacity: .9 });
+    e.dataset.sgn = sgn;
+  });
+  const inf = $('div', '', m, ic('inf', 14 * u, '#fff'));
+  Object.assign(inf.style, { position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', zIndex: 2 });
+  A(inf, 'pop', 7.65, .6);
+  CNT.push({ merge: [c1, c2], a: 6.2, b: 7.6 });
+
+  // 5. «бесконечного вечного фрактального подобия» — фрактальное дерево
+  m = scene(8.35, 10.75, 'night', 'бесконечного вечного', 'фрактального<br><span class="acc">подобия</span>', { bigAt: 9.35 });
+  m.style.marginTop = 2 * u + 'px';
+  const sz = 52 * u; const svg = $('div', '', m); svg.style.width = sz + 'px'; svg.style.height = sz * .62 + 'px';
+  let paths = '';
+  const branch = (x, y, len, ang, d) => {
+    if (d === 0) return;
+    const x2 = x + len * Math.cos(ang), y2 = y - len * Math.sin(ang);
+    const L = len, del = 8.5 + (8 - d) * .22;
+    paths += `<path d="M${x.toFixed(1)} ${y.toFixed(1)}L${x2.toFixed(1)} ${y2.toFixed(1)}" stroke-width="${(d * .55).toFixed(2)}" stroke-dasharray="${L.toFixed(1)}" stroke-dashoffset="${L.toFixed(1)}" style="animation:draw .35s ease-out ${del.toFixed(2)}s forwards"/>`;
+    branch(x2, y2, len * .72, ang + .42, d - 1); branch(x2, y2, len * .72, ang - .42, d - 1);
+  };
+  branch(100, 124, 34, Math.PI / 2, 9);
+  svg.innerHTML = `<svg viewBox="0 0 200 124" width="100%" height="100%"><defs><linearGradient id="tg" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#FF7A2F"/><stop offset="1" stop-color="#3EE6B0"/></linearGradient></defs><g fill="none" stroke="url(#tg)" stroke-linecap="round">${paths}</g></svg>`;
+
+  // 6. «и от вот этого замечательного всеединства существа» — орбита
+  m = scene(10.75, 15.3, 'green', 'и от вот этого замечательного', 'все<span class="acc">единства</span>', { bigAt: 12.95 });
+  const OR = 17 * u; m.style.width = OR * 2.6 + 'px'; m.style.height = OR * 2.25 + 'px';
+  const ring = $('div', '', m); Object.assign(ring.style, { position: 'absolute', left: '50%', top: '50%', width: OR * 2 + 'px', height: OR * 2 + 'px',
+    marginLeft: -OR + 'px', marginTop: -OR + 'px', borderRadius: '50%', border: '2px dashed rgba(62,230,176,.35)' });
+  A(ring, 'fadein', 10.9, .6, 'ease');
+  const hub = A($('div', 'glass', m, ic('inf', 8 * u, '#3EE6B0')), 'pop', 10.85, .6);
+  Object.assign(hub.style, { position: 'absolute', left: '50%', top: '50%', width: 15 * u + 'px', height: 15 * u + 'px', marginLeft: -7.5 * u + 'px', marginTop: -7.5 * u + 'px',
+    display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 4 * u + 'px' });
+  const lines = $('div', '', m); Object.assign(lines.style, { position: 'absolute', inset: 0 });
+  let ls = '';
+  [['атомы', 11.2], ['люди', 11.7], ['природа', 12.15], ['звёзды', 12.6], ['галактики', 13.0], ['ты', 13.5]].forEach(([t, at], i, arr) => {
+    const ang = -Math.PI / 2 + i * 2 * Math.PI / arr.length;
+    const px = OR * 1.3 + OR * Math.cos(ang), py = OR * 1.125 + OR * Math.sin(ang);
+    const n = A($('div', '', m), 'pop', at, .5);
+    Object.assign(n.style, { position: 'absolute', left: px + 'px', top: py + 'px', transform: 'translate(-50%,-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center' });
+    n.innerHTML = `<div style="width:${3.6 * u}px;height:${3.6 * u}px;border-radius:50%;background:#3EE6B0;box-shadow:0 0 ${3 * u}px #3EE6B0;transform:translate(-50%,-50%)"></div>`;
+    const lb = $('div', 'label', n, t); Object.assign(lb.style, { position: 'absolute', top: 1.6 * u + 'px', fontSize: 3.2 * u + 'px', whiteSpace: 'nowrap', transform: 'translateX(-50%)' });
+    const L = Math.hypot(px - OR * 1.3, py - OR * 1.125);
+    ls += `<path d="M${OR * 1.3} ${OR * 1.125}L${px} ${py}" stroke-dasharray="${L}" stroke-dashoffset="${L}" style="animation:draw .5s ease-out ${(13.0 + i * .08).toFixed(2)}s forwards"/>`;
+  });
+  lines.innerHTML = `<svg width="100%" height="100%"><g stroke="#3EE6B0" stroke-width="${.5 * u}" stroke-linecap="round" opacity=".8">${ls}</g></svg>`;
+  m.insertBefore(lines, hub);
+  const sub = A($('div', 'small', m.parentElement, 'существа'), 'up', 14.45);
+  sub.style.marginTop = 7 * u + 'px'; sub.style.color = '#3EE6B0';
+  m.parentElement.style.paddingTop = '12%';
+
+  // 7. «Бесконечно вечный, куда ни посмотри»
+  m = scene(15.3, 17.38, 'orange', 'Бесконечно', 'вечный', { bigAt: 15.9 });
+  const isz = 50 * u; const iv = $('div', '', m); iv.style.width = isz + 'px'; iv.style.height = isz * .5 + 'px';
+  const ip = 'M100 50C80 22 66 10 46 10a40 40 0 0 0 0 80c20 0 34-12 54-40s34-40 54-40a40 40 0 0 1 0 80c-20 0-34-12-54-40z';
+  iv.innerHTML = `<svg viewBox="0 0 200 100" width="100%" height="100%"><path d="${ip}" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="9"/>
+    <path d="${ip}" fill="none" stroke="#FF7A2F" stroke-width="9" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" style="animation:draw 1.3s cubic-bezier(.5,0,.2,1) 15.4s forwards;filter:drop-shadow(0 0 6px #FF7A2F)"/></svg>`;
+  const dot = $('div', '', iv); Object.assign(dot.style, { position: 'absolute', width: 4 * u + 'px', height: 4 * u + 'px', borderRadius: '50%', background: '#fff',
+    boxShadow: `0 0 ${4 * u}px #FFB27A`, offsetPath: `path("${ip}")`, left: 0, top: 0, transform: `scale(${isz / 200})`, transformOrigin: '0 0' });
+  iv.style.position = 'relative';
+  // точка бежит по ∞ (offset-path в координатах viewBox — масштабируем контейнер)
+  const dwrap = $('div', '', iv); Object.assign(dwrap.style, { position: 'absolute', left: 0, top: 0, width: '200px', height: '100px', transform: `scale(${isz / 200})`, transformOrigin: '0 0' });
+  dot.style.transform = 'none'; dwrap.appendChild(dot); dot.style.width = dot.style.height = '8px'; dot.style.boxShadow = '0 0 10px 3px #FFB27A';
+  CNT.push({ dot, a: 15.4, b: 17.4 });
+  const look = A($('div', 'pill', m.parentElement, ic('eye', 4.2 * u, '#0B1A15') + 'куда ни посмотри'), 'pop', 16.42, .5);
+  look.style.marginTop = 4 * u + 'px';
+
+  // 8. «хоть вглубь — бесконечно малая»
+  m = scene(17.38, 19.56, 'night', 'хоть <span class="acc">вглубь</span>', 'бесконечно<br>малая', { bigAt: 18.25 });
+  const rings = (mm, out, a, b) => {
+    const box = $('div', '', mm); const s = 30 * u; Object.assign(box.style, { width: s + 'px', height: s * .8 + 'px', position: 'relative' });
+    for (let i = 0; i < 6; i++) { const r = $('div', 'rg', box); Object.assign(r.style, { position: 'absolute', left: '50%', top: '50%', width: s * .8 + 'px', height: s * .8 + 'px',
+      margin: `${-s * .4}px 0 0 ${-s * .4}px`, borderRadius: '50%', border: `${.45 * u}px solid #3EE6B0` }); }
+    CNT.push({ rings: [...box.children], out, a, b });
+    const num = $('div', 'label', mm); Object.assign(num.style, { fontSize: 8 * u + 'px', fontWeight: 900, letterSpacing: '-.03em', position: 'absolute', textShadow: '0 0 20px rgba(0,0,0,.6)' });
+    return [box, num];
+  };
+  let [rb, num] = rings(m, false, 17.4, 19.56);
+  CNT.push({ el: num, a: 17.6, b: 19.3, from: 0, to: -35, fmt: v => `10<sup style="font-size:.55em">${Math.round(v)}</sup> м` , html: true });
+  A($('div', 'dim', m.parentElement, 'планковская длина'), 'up', 18.9).style.marginTop = 2 * u + 'px';
+
+  // 9. «хоть ввысь — бесконечно большая»
+  m = scene(19.56, 99, 'teal', 'хоть <span class="acc" style="color:#B8FFE6">ввысь</span>', 'бесконечно<br>большая', { bigAt: 19.95 });
+  [rb, num] = rings(m, true, 19.6, 21.1);
+  CNT.push({ el: num, a: 19.7, b: 20.9, from: 0, to: 26, fmt: v => `10<sup style="font-size:.55em">${Math.round(v)}</sup> м`, html: true });
+  A($('div', 'dim', m.parentElement, 'наблюдаемая Вселенная'), 'up', 20.5).style.marginTop = 2 * u + 'px';
+  window.seek(0);
+};
+
+const clamp = x => Math.max(0, Math.min(1, x));
+window.seek = t => {
+  // сцены: появление 0.3 с, уход 0.2 с
+  S.forEach(({ el, a, b }) => {
+    const k = clamp((t - a) / .3) * (1 - clamp((t - (b - .2)) / .2));
+    el.style.opacity = k; el.style.transform = `translateY(${(1 - clamp((t - a) / .3)) * 3}%) scale(${1 - (1 - clamp((t - (b - .2)) / .2)) * 0 + (clamp((t - (b - .2)) / .2)) * -.04})`;
+    el.style.visibility = k > 0 ? 'visible' : 'hidden';
+  });
+  CNT.forEach(c => {
+    const k = clamp((t - c.a) / (c.b - c.a)), e = ease.outCubic(k);
+    if (c.text != null) { const n = Math.round(c.text.length * k); c.el.innerHTML = c.text.slice(0, n) + `<span style="opacity:${Math.floor(t * 3) % 2 ? 1 : .2};color:#3EE6B0">|</span>`; }
+    else if (c.hl) { const on = t >= c.a && t < c.b; c.el.style.borderColor = on ? '#3EE6B0' : 'rgba(255,255,255,.14)';
+      c.el.style.boxShadow = on ? '0 0 30px rgba(62,230,176,.45)' : '0 20px 50px rgba(0,0,0,.35)'; c.el.style.opacity = t < c.a ? '' : (on ? 1 : .55); if (t >= c.a) c.el.style.transform = on ? 'scale(1.06)' : 'scale(.96)'; }
+    else if (c.merge) { const d = (1 - ease.outCubic(k)) * U * 16; c.merge[0].style.transform = `translateX(${-d}px)`; c.merge[1].style.transform = `translateX(${d}px) scale(${1 + k * .15})`; }
+    else if (c.dot) { const kk = clamp((t - c.a) / 1.3); c.dot.style.offsetDistance = (ease.outCubic(kk) * 100 + Math.max(0, t - c.a - 1.3) * 40) % 100 + '%'; c.dot.style.opacity = t > c.a ? 1 : 0; }
+    else if (c.rings) { c.rings.forEach((r, i) => { let p = ((t - c.a) * .55 + i / c.rings.length) % 1; if (t < c.a) p = i / c.rings.length;
+        const s = c.out ? .15 + p * 1.6 : 1.75 - p * 1.6; r.style.transform = `scale(${s})`; r.style.opacity = (c.out ? 1 - p : p) * .9; }); }
+    else if (c.fmt) { const v = c.from + (c.to - c.from) * e; if (c.html) c.el.innerHTML = c.fmt(v); else c.el.textContent = c.fmt(v); }
+  });
+  // субтитры
+  const cap = document.getElementById('cap');
+  let gi = -1;
+  GROUPS.forEach((g, i) => { if (t >= WORDS[g[0]].s - .05) gi = i; });
+  if (gi < 0) { cap.style.opacity = 0; return; }
+  const g = GROUPS[gi], last = WORDS[g[g.length - 1]];
+  const nextStart = GROUPS[gi + 1] ? WORDS[GROUPS[gi + 1][0]].s : 1e9;
+  cap.style.opacity = (t > last.e + .6 && t < nextStart - .05) ? 0 : 1;
+  cap.innerHTML = g.map(i => { const w = WORDS[i]; const cls = t >= w.s && t < w.e + .08 ? 'cur' : (t >= w.s ? 'on' : '');
+    return `<span class="${cls}">${w.w.replace(/[.,]$/, '')}</span>`; }).join('');
+};
+</script></body></html>
