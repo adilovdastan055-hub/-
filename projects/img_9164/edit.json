@@ -1,0 +1,175 @@
+{
+ "output": {
+  "path": "output/IMG_9164_edit.mp4",
+  "size": "9:16",
+  "fps": 30,
+  "crf": 18
+ },
+ "defaults": {
+  "fit": "cover",
+  "grade": "cinematic",
+  "transition": "cut"
+ },
+ "clips": [
+  {
+   "src": "input/IMG_9164.mov",
+   "in": 0.0,
+   "out": 1.1,
+   "zoom": "punch",
+   "transition": "cut"
+  },
+  {
+   "src": "input/IMG_9164.mov",
+   "in": 1.1,
+   "out": 2.8,
+   "zoom": {
+    "from": 1.14,
+    "to": 1.18
+   },
+   "transition": "cut"
+  },
+  {
+   "src": "input/IMG_9164.mov",
+   "in": 2.8,
+   "out": 4.5,
+   "zoom": "in",
+   "transition": "cut"
+  },
+  {
+   "src": "input/IMG_9164.mov",
+   "in": 4.5,
+   "out": 5.95,
+   "zoom": {
+    "from": 1.2,
+    "to": 1.28
+   },
+   "transition": "cut"
+  },
+  {
+   "src": "input/IMG_9164.mov",
+   "in": 5.95,
+   "out": 7.4,
+   "zoom": "out",
+   "transition": "cut"
+  }
+ ],
+ "captions": {
+  "style": "tiktok",
+  "position": "bottom",
+  "source": "work/IMG_9164/words_fixed.json"
+ },
+ "overlays": [
+  {
+   "text": "CLAUDE *CODE*",
+   "start": 1.55,
+   "end": 2.95,
+   "anim": "pop",
+   "pos": "top",
+   "size": 0.085,
+   "font": "Unbounded Black",
+   "color": "#FFFFFF",
+   "accent": "#FF8A3D",
+   "box": "#111111",
+   "rotate": -3,
+   "upper": true
+  }
+ ],
+ "motion": [
+  {
+   "template": "counter",
+   "start": 0.35,
+   "duration": 1.2,
+   "params": {
+    "from": 1,
+    "to": 10,
+    "prefix": "",
+    "suffix": "-й",
+    "label": "день",
+    "y": 0.2,
+    "size": 0.18,
+    "accent": "#FFE600",
+    "count_time": 0.6
+   }
+  },
+  {
+   "template": "counter",
+   "start": 4.3,
+   "duration": 1.75,
+   "params": {
+    "from": 0,
+    "to": 30000,
+    "suffix": " ₽",
+    "label": "за один ролик",
+    "y": 0.2,
+    "size": 0.16,
+    "accent": "#39FF88",
+    "count_time": 0.9
+   }
+  },
+  {
+   "template": "cta",
+   "start": 6.0,
+   "duration": 1.4,
+   "params": {
+    "text": "Подписаться",
+    "done_text": "Вы подписаны",
+    "y": 0.16
+   }
+  },
+  {
+   "template": "progress",
+   "start": 0,
+   "duration": 7.4,
+   "params": {
+    "position": "top",
+    "thickness": 0.008,
+    "accent": "#FFE600"
+   }
+  }
+ ],
+ "music": {
+  "src": "input/generated/music.wav",
+  "volume": 0.22,
+  "duck": true,
+  "fade_in": 0.2,
+  "fade_out": 1.0
+ },
+ "sfx": {
+  "volume": 0.5,
+  "extra": [
+   {
+    "src": "pop",
+    "at": 0.4,
+    "volume": 0.6
+   },
+   {
+    "src": "whoosh",
+    "at": 1.5,
+    "volume": 0.5
+   },
+   {
+    "src": "riser",
+    "at": 3.6,
+    "volume": 0.35
+   },
+   {
+    "src": "impact",
+    "at": 4.5,
+    "volume": 0.7
+   },
+   {
+    "src": "ding",
+    "at": 5.3,
+    "volume": 0.5
+   },
+   {
+    "src": "click",
+    "at": 6.7,
+    "volume": 0.6
+   }
+  ]
+ },
+ "vignette": 0.2,
+ "grain": 3,
+ "loudness": -14
+}
