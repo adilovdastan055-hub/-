@@ -1,0 +1,179 @@
+{
+ "output": {
+  "path": "output/ref_style.mp4",
+  "size": "9:16",
+  "fps": 30,
+  "crf": 18
+ },
+ "defaults": {
+  "fit": "cover",
+  "grade": "moody",
+  "transition": {
+   "type": "cut"
+  }
+ },
+ "clips": [
+  {
+   "src": "input/src.mov",
+   "in": 0.0,
+   "out": 1.1,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.06
+   }
+  },
+  {
+   "src": "input/src.mov",
+   "in": 1.1,
+   "out": 2.85,
+   "zoom": {
+    "from": 1.18,
+    "to": 1.22
+   },
+   "sfx_in": "swoosh"
+  },
+  {
+   "src": "input/src.mov",
+   "in": 2.85,
+   "out": 4.4,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.05
+   },
+   "sfx_in": "swoosh"
+  },
+  {
+   "src": "input/src.mov",
+   "in": 4.4,
+   "out": 5.9,
+   "zoom": {
+    "from": 1.16,
+    "to": 1.24
+   }
+  },
+  {
+   "src": "input/src.mov",
+   "in": 5.9,
+   "out": 7.4,
+   "zoom": "punch",
+   "sfx_in": "whoosh"
+  }
+ ],
+ "captions": {
+  "style": "tiktok",
+  "source": "projects/ref_style/words.json",
+  "position": "bottom",
+  "overrides": {
+   "hl": "#C8FF1E"
+  }
+ },
+ "motion": [
+  {
+   "template": "tools/motion/trick_hud.html",
+   "start": 0.0,
+   "duration": 1.1,
+   "params": {
+    "num": "10",
+    "kicker": "уже",
+    "head": "*день*",
+    "tail": "в Claude Code",
+    "badge": {
+     "icon": "📅",
+     "label": "Day"
+    },
+    "steps": 3,
+    "active": 1,
+    "arc": true,
+    "hsize": 0.11,
+    "nsize": 0.34
+   }
+  },
+  {
+   "template": "tools/motion/trick_hud.html",
+   "start": 1.1,
+   "duration": 1.75,
+   "params": {
+    "kicker": "пользуюсь",
+    "head": "*Claude Code*",
+    "badge": {
+     "icon": "🤖",
+     "label": "AI"
+    },
+    "steps": 3,
+    "active": 2,
+    "hsize": 0.11,
+    "nsize": 0.34
+   }
+  },
+  {
+   "template": "tools/motion/trick_hud.html",
+   "start": 2.85,
+   "duration": 3.05,
+   "params": {
+    "kicker": "поднял ценник до",
+    "head": "*{N}*",
+    "count": {
+     "to": 30000,
+     "suffix": " ₽",
+     "delay": 0.5,
+     "time": 1.5
+    },
+    "tail": "за один ролик",
+    "badge": {
+     "icon": "💸",
+     "label": "Price"
+    },
+    "steps": 3,
+    "active": 3,
+    "hsize": 0.11,
+    "nsize": 0.34
+   }
+  },
+  {
+   "template": "tools/motion/trick_hud.html",
+   "start": 5.9,
+   "duration": 1.5,
+   "params": {
+    "kicker": "хочешь так же?",
+    "head": "*Подпишись*",
+    "tail": "покажу, как",
+    "badge": {
+     "icon": "🔔",
+     "label": "Follow"
+    },
+    "arc": true,
+    "hsize": 0.11,
+    "nsize": 0.34
+   }
+  }
+ ],
+ "music": {
+  "src": "input/generated/ref_music.wav",
+  "volume": 0.2,
+  "duck": true,
+  "fade_out": 0.8
+ },
+ "sfx": {
+  "volume": 0.4,
+  "extra": [
+   {
+    "src": "impact",
+    "at": 4.56,
+    "volume": 0.7
+   },
+   {
+    "src": "pop",
+    "at": 0.05,
+    "volume": 0.5
+   },
+   {
+    "src": "ding",
+    "at": 6.0,
+    "volume": 0.4
+   }
+  ]
+ },
+ "vignette": 0.35,
+ "grain": 4,
+ "loudness": -14
+}
