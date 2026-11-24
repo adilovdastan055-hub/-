@@ -9,15 +9,8 @@ XF = 0.35            # переход интро → речь
 # сегменты речи (секунды исходника) без пауз + крупность (джамп-каты: общий ↔ крупный)
 CLOSE = [0.12, 0.09, 0.76, 0.76]   # крупный план: кроп источника, голова чуть ниже центра
 CLOSE2 = [0.12, 0.13, 0.76, 0.76]  # после склейки в исходнике (10.8 с) человек сидит ниже
-SEGS = [
-    (0.00, 1.80, None, {"from": 1.00, "to": 1.08}),
-    (1.86, 5.38, CLOSE, {"from": 1.00, "to": 1.06}),
-    (5.62, 7.95, None, {"from": 1.04, "to": 1.10}),
-    (8.25, 10.70, CLOSE, {"from": 1.02, "to": 1.08}),
-    (10.80, 12.62, None, {"from": 1.00, "to": 1.07}),
-    (12.95, 14.52, CLOSE2, {"from": 1.04, "to": 1.10}),
-    (14.52, 17.75, None, {"from": 1.32, "to": 1.00}),
-]
+# статичный кадр без зумов; паузы не вырезаем — без зумов джамп-каты выглядят как рывки
+SEGS = [(0.00, 17.75, None, None)]
 T0 = INTRO - XF       # где начинается речь на итоговом таймлайне
 
 
@@ -85,6 +78,8 @@ EV = [
      "y": .6, "items": [[o(48), "🏡", "Комфорт"], [o(50), "✨", "Уют"]], "sparks": [[.2, -1, o(50)], [.8, 0, o(50, .3)]]},
 ]
 EV[0]["items"].sort()
+for ev in EV:   # опускаем под лицо: зона груди/стола, выше нижнего интерфейса платформ
+    ev["y"] = {"list": .655, "hero": .655}.get(ev["type"], .71)
 for ev in EV:
     times = [it[0] for it in ev.get("items", [])] or [ev["s"]]
     for t in times:
@@ -95,7 +90,7 @@ M0 = T0
 def rel(x):
     return round(x - M0, 3)
 for c in captions:
-    c["s"], c["e"] = rel(c["s"]), rel(c["e"])
+    c["s"], c["e"] = max(rel(c["s"]), 0.3), rel(c["e"])   # не налезать на уходящий вопрос интро
 for ev in EV:
     ev["s"], ev["e"] = rel(ev["s"]), rel(ev["e"])
     if "t2" in ev:
@@ -111,7 +106,9 @@ END = omap(17.75)
 clips = [{"src": "input/generated/navy_bg.mp4", "in": 0, "out": INTRO, "mute": True, "grade": "none",
           "transition": {"type": "zoomin", "duration": XF}}]
 for a, b, crop, z in SEGS:
-    c = {"src": SRC, "in": a, "out": b, "zoom": z}
+    c = {"src": SRC, "in": a, "out": b}
+    if z:
+        c["zoom"] = z
     if crop:
         c["crop"] = crop
     clips.append(c)
@@ -122,14 +119,14 @@ intro_sfx = [("click", .10, .35), ("click", .19, .3), ("click", .28, .3), ("whoo
 sfx = [{"src": s, "at": t, "volume": v} for s, t, v in intro_sfx] + sfx
 
 edit = {
-    "output": {"path": "output/deputat_v2.mp4", "size": "9:16", "fps": 30, "crf": 18},
+    "output": {"path": "output/deputat_v3.mp4", "size": "9:16", "fps": 30, "crf": 18},
     "defaults": {"fit": "cover", "grade": "cool", "transition": {"type": "cut"}},
     "clips": clips,
     "motion": [
         {"template": "question", "start": 0, "duration": INTRO - 0.15, "params": {"mode": "intro", "bg": False}},
         {"template": "talk", "start": M0, "duration": round(END - M0, 3), "params": {"captions": captions, "events": EV}},
     ],
-    "sfx": {"volume": 1.0, "extra": sfx},
+    
     "vignette": 0.15,
     "loudness": -14,
 }
