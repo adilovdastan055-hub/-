@@ -1,0 +1,149 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css"><style>
+/* Вопрос-интро в стиле «glass + chrome + serif»: тонкий гротеск + жирный Playfair Display (курсив — акцент),
+   стеклянные карточки, хромированная сфера, боке и искры. Тёмно-синяя палитра. */
+@font-face { font-family: 'PF'; font-weight: 800; font-style: normal; src: url(fonts/playfair-display-cyrillic-800-normal.woff2); }
+@font-face { font-family: 'PF'; font-weight: 800; font-style: italic; src: url(fonts/playfair-display-cyrillic-800-italic.woff2); }
+@font-face { font-family: 'PF'; font-weight: 900; font-style: italic; src: url(fonts/playfair-display-cyrillic-900-italic.woff2); }
+:root { --navy: #0A1A44; --deep: #040A1E; --ice: #CFE0FF; --blue: #4C7BFF; }
+#pre { position: absolute; left: -9999px; font-family: 'PF'; }
+#pre i { font-style: italic; font-weight: 900; } #pre b { font-weight: 800; }
+#bg { position: absolute; inset: 0; background:
+      radial-gradient(120% 70% at 50% 38%, #16306E 0%, #0B1B4A 38%, #050D27 75%, #030716 100%); }
+#bg.off { display: none; }
+.bokeh { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(150,185,255,.28), rgba(150,185,255,0) 70%);
+         animation: drift var(--t) linear both, fadeIn 1s ease both; }
+@keyframes drift { from { transform: translate(0,0); } to { transform: translate(var(--dx), var(--dy)); } }
+@keyframes fadeIn { from { opacity: 0; } }
+.spark { position: absolute; color: #DCE8FF; font-family: 'DejaVu Sans'; text-shadow: 0 0 .5em rgba(160,195,255,.9);
+         animation: twinkle 1.6s ease-in-out both; }
+@keyframes twinkle { 0% { opacity: 0; transform: scale(.2) rotate(-40deg); } 35% { opacity: 1; transform: scale(1) rotate(0); }
+                     100% { opacity: .55; transform: scale(.8) rotate(25deg); } }
+
+/* текст */
+.txt { position: absolute; left: 0; right: 0; text-align: center; color: #fff; }
+.kick { font-family: 'Inter'; font-weight: 300; letter-spacing: -.02em; color: #E6EEFF; }
+.w { display: inline-block; white-space: pre; animation: wIn .75s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes wIn { from { opacity: 0; transform: translateY(35%); filter: blur(12px); } to { opacity: 1; transform: none; filter: none; } }
+.serif { font-family: 'PF'; font-weight: 800; line-height: 1; letter-spacing: -.01em;
+         text-shadow: 0 .03em .2em rgba(5,15,45,.6); }
+.serif.it { font-style: italic; font-weight: 900; }
+.chrome { background: linear-gradient(180deg, #FFFFFF 0%, #DCE7FF 45%, #8FB0F5 60%, #F2F6FF 100%);
+          -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none;
+          filter: drop-shadow(0 .04em .12em rgba(5,15,45,.55)); }
+.big { display: inline-block; animation: bigIn 1s cubic-bezier(.16,1,.3,1) both; }
+@keyframes bigIn { from { opacity: 0; transform: translateY(18%) scale(1.18); filter: blur(18px); letter-spacing: .08em; }
+                   to { opacity: 1; transform: none; filter: none; } }
+
+/* хромированная сфера */
+.orbwrap { position: absolute; animation: orbIn 1.1s cubic-bezier(.16,1,.3,1) both; }
+@keyframes orbIn { from { opacity: 0; transform: scale(.6); filter: blur(14px); } to { opacity: 1; transform: none; filter: none; } }
+.halo { position: absolute; inset: -18%; border-radius: 50%; border: 1px solid rgba(190,210,255,.35);
+        background: radial-gradient(circle, rgba(120,160,255,.10) 55%, rgba(120,160,255,.22) 70%, rgba(120,160,255,0) 72%);
+        box-shadow: 0 0 60px rgba(80,130,255,.25), inset 0 0 40px rgba(170,200,255,.18); }
+.orb { position: absolute; inset: 0; border-radius: 50%; overflow: hidden; animation: bob 3.5s ease-in-out both;
+       background:
+        radial-gradient(22% 16% at 36% 24%, rgba(255,255,255,1), rgba(255,255,255,0) 75%),
+        radial-gradient(70% 22% at 50% 30%, rgba(210,225,255,.55), rgba(210,225,255,0) 70%),
+        linear-gradient(180deg, #E8F0FF 0%, #9DB7EE 18%, #3E5FB2 40%, #0B1A45 52%, #07112E 58%, #2C4C9E 72%, #A8C2F5 88%, #EEF4FF 100%);
+       box-shadow: 0 30px 80px rgba(0,0,0,.55), inset -12px -18px 40px rgba(0,0,20,.45); }
+.orb::after { content: ''; position: absolute; left: -10%; right: -10%; top: 52%; height: 13%;
+              background: repeating-linear-gradient(180deg, rgba(220,232,255,.55) 0 2px, rgba(220,232,255,0) 2px 7px);
+              border-radius: 50%; transform: rotate(-4deg); opacity: .7; }
+@keyframes bob { 0% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-3%) rotate(6deg); } 100% { transform: translateY(0) rotate(12deg); } }
+
+/* стеклянные карточки */
+.card { position: absolute; transform: translate(-50%,-50%); padding: .7em 1.1em .8em; border-radius: .9em;
+        background: linear-gradient(160deg, rgba(190,210,255,.22), rgba(120,150,230,.08));
+        border: 1px solid rgba(200,220,255,.38); backdrop-filter: blur(10px);
+        box-shadow: 0 .6em 1.6em rgba(0,5,30,.45), inset 0 1px 0 rgba(255,255,255,.25);
+        font-family: 'Inter'; font-weight: 400; color: #E9F0FF; text-align: center; white-space: nowrap;
+        animation: cardIn .9s cubic-bezier(.16,1,.3,1) both, floaty 3s ease-in-out both; }
+.card .tag { display: inline-block; font-weight: 600; font-size: .72em; padding: .18em .7em; border-radius: 99px;
+             background: rgba(120,160,255,.45); color: #fff; margin-bottom: .35em; }
+@keyframes cardIn { from { opacity: 0; transform: translate(-50%,-50%) translate(var(--fx), var(--fy)) scale(.6); filter: blur(10px); }
+                    to { opacity: 1; transform: translate(-50%,-50%); filter: none; } }
+@keyframes floaty { from { margin-top: 0; } to { margin-top: var(--fl); } }
+
+/* компактный режим (плашка над видео) */
+.chip { position: absolute; left: 50%; transform: translateX(-50%); width: 88%; text-align: center;
+        padding: .8em 1em .9em; border-radius: 1.1em; color: #fff;
+        background: linear-gradient(160deg, rgba(22,48,110,.72), rgba(6,14,40,.72));
+        border: 1px solid rgba(190,210,255,.35); backdrop-filter: blur(14px);
+        box-shadow: 0 .8em 2em rgba(0,5,30,.45), inset 0 1px 0 rgba(255,255,255,.2);
+        animation: chipIn .9s cubic-bezier(.16,1,.3,1) both; }
+@keyframes chipIn { from { opacity: 0; transform: translateX(-50%) translateY(-25%) scale(.92); filter: blur(12px); }
+                    to { opacity: 1; transform: translateX(-50%); filter: none; } }
+.pill { display: inline-block; font-family: 'Inter'; font-weight: 600; padding: .2em .9em; border-radius: 99px;
+        background: rgba(110,150,255,.4); border: 1px solid rgba(200,220,255,.35); color: #fff; letter-spacing: .02em; }
+</style></head><body>
+<div id="bg"></div><div id="wrap"></div>
+<div id="pre"><b>Почему депутаты?</b> <i>депутаты?</i></div>
+<script src="_base.js"></script><script>
+// params: mode ("intro" | "chip"), kicker, big, tail, accentWord, cards [[tag,text,x,y]...], bg (bool), y (chip, доля высоты)
+window.setup = () => {
+  const wrap = document.getElementById('wrap');
+  const mode = P.mode || 'intro';
+  const rnd = (s => () => (s = (s * 9301 + 49297) % 233280) / 233280)(7);
+  if (mode === 'chip' || P.bg === false) document.getElementById('bg').className = 'off';
+
+  if (mode === 'chip') {
+    const c = el('div', 'chip', wrap);
+    c.style.top = (H * (P.y || 0.13)) + 'px';
+    c.style.fontSize = (W * 0.032) + 'px';
+    const pill = el('div', 'pill', c, P.label || 'Вопрос'); pill.style.fontSize = (W * 0.026) + 'px';
+    pill.style.marginBottom = '.6em';
+    const l1 = el('div', 'kick', c); l1.style.fontSize = (W * 0.047) + 'px'; l1.style.marginTop = '.4em';
+    words(l1, P.kicker || 'Почему вы решили', 0.25);
+    const l2 = el('div', 'serif', c); l2.style.fontSize = (W * 0.078) + 'px'; l2.style.marginTop = '.1em';
+    const b = el('span', 'big', l2, (P.big || 'баллотироваться') + ' '); b.style.animationDelay = '.45s';
+    const l3 = el('div', '', c); l3.style.fontSize = (W * 0.078) + 'px'; l3.style.lineHeight = '1.05';
+    const v = el('span', 'kick w', l3, 'в '); v.style.fontSize = '.6em'; v.style.animationDelay = '.65s';
+    const d = el('span', 'serif it chrome big', l3, P.accentWord || 'депутаты?'); d.style.animationDelay = '.75s';
+    return;
+  }
+
+  // фон: боке + искры
+  for (let i = 0; i < 16; i++) {
+    const b = el('div', 'bokeh', wrap), r = (0.05 + rnd() * 0.16) * W;
+    Object.assign(b.style, { width: r + 'px', height: r + 'px', left: (rnd() * W - r / 2) + 'px', top: (rnd() * H - r / 2) + 'px',
+      opacity: .4 + rnd() * .6 });
+    b.style.setProperty('--t', (P.duration || 3) + 's');
+    b.style.setProperty('--dx', ((rnd() - .5) * W * .08) + 'px'); b.style.setProperty('--dy', (-rnd() * H * .05) + 'px');
+  }
+  [[.82, .2, .05, .3], [.18, .27, .035, .6], [.86, .63, .03, .9], [.12, .74, .045, 1.2], [.7, .14, .025, 1.0]].forEach(([x, y, s, dl]) => {
+    const sp = el('div', 'spark', wrap, '✦');
+    Object.assign(sp.style, { left: x * W + 'px', top: y * H + 'px', fontSize: s * W + 'px', animationDelay: dl + 's' });
+  });
+
+  // сфера
+  const D = W * 0.42, ox = W / 2, oy = H * 0.64;
+  const ow = el('div', 'orbwrap', wrap);
+  Object.assign(ow.style, { width: D + 'px', height: D + 'px', left: (ox - D / 2) + 'px', top: (oy - D / 2) + 'px', animationDelay: '.5s' });
+  el('div', 'halo', ow); el('div', 'orb', ow);
+
+  // стеклянные карточки вокруг сферы
+  const cards = P.cards || [];
+  cards.forEach(([tag, text, x, y], i) => {
+    const c = el('div', 'card', wrap);
+    c.style.left = x * W + 'px'; c.style.top = y * H + 'px'; c.style.fontSize = (W * 0.03) + 'px';
+    c.style.setProperty('--fx', ((ox - x * W) * .6) + 'px'); c.style.setProperty('--fy', ((oy - y * H) * .6) + 'px');
+    c.style.setProperty('--fl', ((i % 2 ? 1 : -1) * W * 0.012) + 'px');
+    c.style.animationDelay = (1.15 + i * 0.12) + 's, 0s';
+    if (tag) el('div', 'tag', c, tag);
+    el('div', '', c, text);
+  });
+
+  // текст вопроса
+  const t = el('div', 'txt', wrap); t.style.top = (H * 0.2) + 'px';
+  const k = el('div', 'kick', t); k.style.fontSize = (W * 0.072) + 'px';
+  words(k, P.kicker || 'Почему вы решили', 0.1);
+  const s = el('div', 'serif', t); s.style.fontSize = (W * 0.098) + 'px'; s.style.marginTop = '.12em';
+  const b = el('span', 'big', s, P.big || 'баллотироваться'); b.style.animationDelay = '.45s';
+  const l3 = el('div', '', t); l3.style.fontSize = (W * 0.14) + 'px'; l3.style.lineHeight = '1.1';
+  const v = el('span', 'kick w', l3, 'в '); v.style.fontSize = '.48em'; v.style.animationDelay = '.75s';
+  const d = el('span', 'serif it chrome big', l3, P.accentWord || 'депутаты?'); d.style.animationDelay = '.85s';
+};
+function words(node, text, delay) {
+  text.split(' ').forEach((w, i, a) => { const s = el('span', 'w', node, w + (i < a.length - 1 ? ' ' : '')); s.style.animationDelay = (delay + i * 0.09) + 's'; });
+}
+</script></body></html>

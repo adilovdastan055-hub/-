@@ -1,0 +1,96 @@
+{
+ "output": {
+  "path": "output/deputat_final.mp4",
+  "size": "9:16",
+  "fps": 30,
+  "crf": 18
+ },
+ "defaults": {
+  "fit": "cover",
+  "grade": "cool",
+  "transition": {
+   "type": "cut"
+  }
+ },
+ "clips": [
+  {
+   "src": "input/generated/navy_bg.mp4",
+   "in": 0,
+   "out": 3.4,
+   "mute": true,
+   "grade": "none",
+   "transition": {
+    "type": "fadewhite",
+    "duration": 0.4
+   },
+   "sfx": "whoosh"
+  },
+  {
+   "src": "input/main.mov",
+   "in": 0,
+   "out": 17.8,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.06
+   }
+  }
+ ],
+ "motion": [
+  {
+   "template": "question",
+   "start": 0,
+   "duration": 3.2,
+   "params": {
+    "mode": "intro",
+    "bg": false,
+    "cards": [
+     [
+      "Город",
+      "Комфорт и уют",
+      0.2,
+      0.52
+     ],
+     [
+      "Опыт",
+      "Производство",
+      0.82,
+      0.5
+     ],
+     [
+      "ЖКХ",
+      "Коммунальная сфера",
+      0.22,
+      0.8
+     ],
+     [
+      "Регион",
+      "Сельское хозяйство",
+      0.78,
+      0.83
+     ]
+    ]
+   }
+  },
+  {
+   "template": "question",
+   "start": 3.1,
+   "duration": 4.2,
+   "params": {
+    "mode": "chip",
+    "y": 0.12
+   }
+  }
+ ],
+ "music": {
+  "src": "input/generated/music.wav",
+  "volume": 0.18,
+  "duck": true,
+  "fade_in": 0.3,
+  "fade_out": 1.5
+ },
+ "sfx": {
+  "volume": 0.4
+ },
+ "vignette": 0.2,
+ "loudness": -14
+}
