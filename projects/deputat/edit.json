@@ -27,7 +27,8 @@
   {
    "src": "input/main.mov",
    "in": 0.0,
-   "out": 17.75
+   "out": 17.75,
+   "volume": 4.5
   }
  ],
  "motion": [

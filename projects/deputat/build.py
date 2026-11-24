@@ -106,7 +106,7 @@ END = omap(17.75)
 clips = [{"src": "input/generated/navy_bg.mp4", "in": 0, "out": INTRO, "mute": True, "grade": "none",
           "transition": {"type": "zoomin", "duration": XF}}]
 for a, b, crop, z in SEGS:
-    c = {"src": SRC, "in": a, "out": b}
+    c = {"src": SRC, "in": a, "out": b, "volume": 4.5}   # исходник тихий (−32 LUFS), loudnorm один не дотягивает
     if z:
         c["zoom"] = z
     if crop:
