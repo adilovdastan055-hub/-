@@ -1,0 +1,379 @@
+{
+ "output": {
+  "path": "output/deputy_reasons.mp4",
+  "size": "9:16",
+  "fps": 30,
+  "crf": 18
+ },
+ "defaults": {
+  "fit": "cover",
+  "grade": "cinematic"
+ },
+ "clips": [
+  {
+   "src": "input/main.mov",
+   "in": 0.0,
+   "out": 1.78,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.03
+   },
+   "transition": {
+    "type": "cut"
+   }
+  },
+  {
+   "src": "input/main.mov",
+   "in": 1.84,
+   "out": 5.45,
+   "zoom": {
+    "from": 1.1,
+    "to": 1.1300000000000001
+   },
+   "transition": {
+    "type": "cut"
+   }
+  },
+  {
+   "src": "input/main.mov",
+   "in": 5.6,
+   "out": 7.95,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.03
+   },
+   "transition": {
+    "type": "cut"
+   }
+  },
+  {
+   "src": "input/main.mov",
+   "in": 8.24,
+   "out": 10.7,
+   "zoom": {
+    "from": 1.1,
+    "to": 1.1300000000000001
+   },
+   "transition": {
+    "type": "cut"
+   }
+  },
+  {
+   "src": "input/main.mov",
+   "in": 10.8,
+   "out": 12.62,
+   "zoom": {
+    "from": 1.0,
+    "to": 1.03
+   },
+   "transition": {
+    "type": "cut"
+   }
+  },
+  {
+   "src": "input/main.mov",
+   "in": 12.94,
+   "out": 17.35,
+   "zoom": {
+    "from": 1.1,
+    "to": 1.1300000000000001
+   },
+   "transition": {
+    "type": "cut"
+   }
+  }
+ ],
+ "motion": [
+  {
+   "template": "tools/motion/word_reel.html",
+   "start": 0.0,
+   "duration": 1.05,
+   "params": {
+    "big": "город",
+    "t_big": 0.62,
+    "y": 0.71,
+    "size": 0.155,
+    "lead": "я болею за свой"
+   }
+  },
+  {
+   "template": "tools/motion/word_reel.html",
+   "start": 1.1,
+   "duration": 0.72,
+   "params": {
+    "big": "регион",
+    "t_big": 0.28,
+    "y": 0.71,
+    "size": 0.155,
+    "lead": "за свой"
+   }
+  },
+  {
+   "template": "tools/motion/word_reel.html",
+   "start": 1.86,
+   "duration": 1.42,
+   "params": {
+    "big": "жители",
+    "t_big": 0.46,
+    "y": 0.71,
+    "size": 0.155,
+    "lead": "хочу, чтобы",
+    "blue": "нашего города",
+    "t_blue": 0.74
+   }
+  },
+  {
+   "template": "tools/motion/word_reel.html",
+   "start": 3.28,
+   "duration": 0.9,
+   "params": {
+    "big": "лучше",
+    "t_big": 0.36,
+    "y": 0.71,
+    "size": 0.155,
+    "lead": "жили"
+   }
+  },
+  {
+   "template": "tools/motion/word_reel.html",
+   "start": 4.18,
+   "duration": 1.21,
+   "params": {
+    "big": "комфортных",
+    "t_big": 0.16,
+    "y": 0.71,
+    "size": 0.155,
+    "lead": "в более",
+    "blue": "условиях",
+    "t_blue": 0.66
+   }
+  },
+  {
+   "template": "tools/motion/word_reel.html",
+   "start": 5.41,
+   "duration": 0.66,
+   "params": {
+    "big": "второе",
+    "t_big": 0.06,
+    "y": 0.71,
+    "size": 0.155
+   }
+  },
+  {
+   "template": "tools/motion/word_reel.html",
+   "start": 6.09,
+   "duration": 1.65,
+   "params": {
+    "big": "опыт",
+    "t_big": 0.38,
+    "y": 0.71,
+    "size": 0.155,
+    "lead": "у меня есть",
+    "blue": "в производстве",
+    "t_blue": 1.02
+   }
+  },
+  {
+   "template": "tools/motion/word_reel.html",
+   "start": 7.76,
+   "duration": 1.1,
+   "params": {
+    "big": "коммунальной",
+    "t_big": 0.1,
+    "y": 0.71,
+    "size": 0.155,
+    "lead": "в",
+    "blue": "сфере",
+    "t_blue": 0.48
+   }
+  },
+  {
+   "template": "tools/motion/word_reel.html",
+   "start": 8.88,
+   "duration": 1.32,
+   "params": {
+    "big": "сельском",
+    "t_big": 0.52,
+    "y": 0.71,
+    "size": 0.155,
+    "lead": "а также в",
+    "blue": "хозяйстве",
+    "t_blue": 0.76
+   }
+  },
+  {
+   "template": "tools/motion/word_reel.html",
+   "start": 10.2,
+   "duration": 0.68,
+   "params": {
+    "big": "третье",
+    "t_big": 0.02,
+    "y": 0.71,
+    "size": 0.155
+   }
+  },
+  {
+   "template": "tools/motion/word_reel.html",
+   "start": 10.9,
+   "duration": 1.12,
+   "params": {
+    "big": "понимание",
+    "t_big": 0.52,
+    "y": 0.71,
+    "size": 0.155,
+    "lead": "есть опыт и"
+   }
+  },
+  {
+   "template": "tools/motion/word_reel.html",
+   "start": 12.02,
+   "duration": 1.94,
+   "params": {
+    "big": "депутат",
+    "t_big": 1.08,
+    "y": 0.71,
+    "size": 0.155,
+    "lead": "чем должен заниматься"
+   }
+  },
+  {
+   "template": "tools/motion/word_reel.html",
+   "start": 13.98,
+   "duration": 1.12,
+   "params": {
+    "big": "комфорт",
+    "t_big": 0.56,
+    "y": 0.71,
+    "size": 0.155,
+    "lead": "как создавать"
+   }
+  },
+  {
+   "template": "tools/motion/word_reel.html",
+   "start": 15.1,
+   "duration": 1.33,
+   "params": {
+    "big": "уют",
+    "t_big": 0.24,
+    "y": 0.71,
+    "size": 0.155,
+    "lead": "и",
+    "blue": "в нашем городе",
+    "t_blue": 0.62
+   }
+  },
+  {
+   "template": "tools/motion/reason_card.html",
+   "start": 0.15,
+   "duration": 5.24,
+   "params": {
+    "num": "01",
+    "label": "из 03 · почему я",
+    "step": 1,
+    "title": "Болею за свой город",
+    "items": [
+     {
+      "icon": "🏙️",
+      "label": "Город и регион",
+      "at": 1.23
+     },
+     {
+      "icon": "🏡",
+      "label": "Комфорт для жителей",
+      "at": 4.19
+     }
+    ],
+    "total": 3,
+    "top": 0.085,
+    "width": 0.76
+   }
+  },
+  {
+   "template": "tools/motion/reason_card.html",
+   "start": 5.39,
+   "duration": 4.81,
+   "params": {
+    "num": "02",
+    "label": "из 03 · опыт",
+    "step": 2,
+    "title": "Опыт работы",
+    "items": [
+     {
+      "icon": "🏭",
+      "label": "Производство",
+      "at": 1.72
+     },
+     {
+      "icon": "🔧",
+      "label": "ЖКХ",
+      "at": 2.47
+     },
+     {
+      "icon": "🌾",
+      "label": "Сельское хоз-во",
+      "at": 4.01
+     }
+    ],
+    "total": 3,
+    "top": 0.085,
+    "width": 0.76
+   }
+  },
+  {
+   "template": "tools/motion/reason_card.html",
+   "start": 10.2,
+   "duration": 6.23,
+   "params": {
+    "num": "03",
+    "label": "из 03 · понимание",
+    "step": 3,
+    "title": "Знаю работу депутата",
+    "items": [
+     {
+      "icon": "🏛️",
+      "label": "Задачи депутата",
+      "at": 2.9
+     },
+     {
+      "icon": "🤝",
+      "label": "Комфорт и уют",
+      "at": 4.34
+     }
+    ],
+    "total": 3,
+    "top": 0.085,
+    "width": 0.76
+   }
+  }
+ ],
+ "music": {
+  "src": "input/generated/music_deputy.wav",
+  "volume": 0.16,
+  "duck": true,
+  "fade_in": 0.5,
+  "fade_out": 1.5,
+  "loop": true
+ },
+ "sfx": {
+  "volume": 0.35,
+  "extra": [
+   {
+    "src": "pop",
+    "at": 0.15,
+    "volume": 0.4
+   },
+   {
+    "src": "pop",
+    "at": 5.54,
+    "volume": 0.4
+   },
+   {
+    "src": "pop",
+    "at": 10.35,
+    "volume": 0.4
+   }
+  ]
+ },
+ "vignette": 0.2,
+ "loudness": -14
+}

@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css"><style>
+/* «Dynamic word reels»: мелкая подводка сверху, одно крупное слово, синее слово-акцент снизу */
+#wrap { animation-duration: .25s; animation-delay: calc(var(--D) - .25s); }
+.blk { position: absolute; left: 0; right: 0; top: var(--y); transform: translateY(-50%);
+       display: flex; flex-direction: column; align-items: center; text-align: center; }
+.lead { display: flex; gap: .28em; justify-content: center; font-family: 'Montserrat'; font-weight: 500;
+        font-size: var(--ls); color: #fff; line-height: 1.1; margin-bottom: .05em; letter-spacing: -.01em; }
+.lw { display: inline-block; animation: soft .35s cubic-bezier(.2,.8,.2,1) both; }
+.big { font-family: 'Montserrat'; font-weight: 700; font-size: var(--bs); color: #fff; line-height: .95;
+       letter-spacing: -.045em; white-space: nowrap; animation: bigIn .45s cubic-bezier(.16,1,.3,1) both; }
+.blue { font-family: 'Montserrat'; font-weight: 600; font-size: var(--bls); color: var(--accent); line-height: 1.15;
+        letter-spacing: -.02em; margin-top: .1em; white-space: nowrap; animation: soft .4s cubic-bezier(.2,.8,.2,1) both; }
+.lead, .big, .blue { text-shadow: 0 .04em .25em rgba(0,0,0,.45); }
+@keyframes soft { from { opacity: 0; transform: translateY(35%); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes bigIn { from { opacity: 0; transform: scale(1.25); filter: blur(14px); letter-spacing: .04em; } to { opacity: 1; transform: none; filter: none; } }
+</style></head><body><div id="wrap"><div class="blk"></div></div><script src="_base.js"></script><script>
+// params: lead (строка), big, blue, t_big, t_blue, lead_step, y (доля высоты, центр блока), size (доля ширины)
+window.setup = () => {
+  const s = (P.size || 0.15) * W;
+  css('--y', ((P.y ?? 0.7) * H) + 'px'); css('--bs', s + 'px'); css('--ls', (s * 0.33) + 'px'); css('--bls', (s * 0.46) + 'px');
+  css('--accent', P.accent || '#4AA8FF');
+  const blk = document.querySelector('.blk');
+  if (P.lead) {
+    const l = el('div', 'lead', blk);
+    P.lead.split(' ').forEach((w, i) => { el('span', 'lw', l, w).style.animationDelay = (i * (P.lead_step ?? 0.1)) + 's'; });
+  }
+  const b = el('div', 'big', blk, P.big || '');
+  b.style.animationDelay = (P.t_big || 0) + 's';
+  // длинное слово — ужимаем, чтобы влезало в 88% ширины
+  requestAnimationFrame(() => {});
+  const fit = () => { const k = (W * 0.88) / b.scrollWidth; if (k < 1) b.style.fontSize = (s * k) + 'px'; };
+  fit();
+  if (P.blue) { const u = el('div', 'blue', blk, P.blue); u.style.animationDelay = (P.t_blue || 0) + 's'; }
+};
+</script></body></html>
