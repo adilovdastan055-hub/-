@@ -16,12 +16,12 @@
 /* субтитры */
 .cap { position: absolute; left: 4%; right: 4%; text-align: center; color: #fff; display: flex; flex-direction: column;
        align-items: center; justify-content: flex-end; }
-.cap .row { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; }
+.cap .row { display: flex; flex-wrap: nowrap; justify-content: center; align-items: baseline; line-height: 1.02; }
 .sw { display: inline-block; white-space: pre; font-family: 'Inter'; font-weight: 500; color: #EAF1FF;
       text-shadow: 0 .05em .25em rgba(2,8,30,.8); animation: wIn .45s cubic-bezier(.2,.8,.2,1) both; }
-.aw { display: inline-block; white-space: pre; font-family: 'PF'; font-style: italic; font-weight: 900; line-height: 1.05;
+.aw { display: inline-block; white-space: pre; font-family: 'PF'; font-style: italic; font-weight: 900; line-height: 1;
       background: linear-gradient(180deg, #FFFFFF 0%, #DCE7FF 45%, #8FB0F5 62%, #F2F6FF 100%);
-      -webkit-background-clip: text; background-clip: text; color: transparent; padding: 0 .08em .06em;
+      -webkit-background-clip: text; background-clip: text; color: transparent; padding: 0 .06em .02em;
       filter: drop-shadow(0 .04em .14em rgba(2,8,30,.8));
       animation: aIn .7s cubic-bezier(.16,1,.3,1) both; }
 @keyframes wIn { from { opacity: 0; transform: translateY(40%); filter: blur(10px); } to { opacity: 1; transform: none; filter: none; } }
@@ -35,29 +35,29 @@
          box-shadow: 0 .7em 1.8em rgba(0,4,25,.55), inset 0 1px 0 rgba(255,255,255,.25); color: #fff; }
 .in { animation: cIn .8s cubic-bezier(.16,1,.3,1) both; }
 @keyframes cIn { from { opacity: 0; transform: translateY(30%) scale(.7); filter: blur(12px); } to { opacity: 1; transform: none; filter: none; } }
-.chip { display: flex; align-items: center; gap: .45em; padding: .45em .9em .5em .55em; font-family: 'Inter'; font-weight: 600; }
+.chip { display: flex; align-items: center; gap: .4em; padding: .4em .85em .4em .5em; white-space: nowrap; font-family: 'Inter'; font-weight: 600; }
 .emo { font-family: 'Noto Color Emoji'; line-height: 1; }
-.chip .emo { font-size: 1.5em; }
-.badge { display: flex; align-items: center; gap: .6em; padding: .4em 1.1em .45em .45em; }
-.num { width: 1.7em; height: 1.7em; border-radius: 50%; display: grid; place-items: center; font-family: 'PF'; font-style: italic;
-       font-weight: 900; font-size: 1.6em; color: #0A1A44;
+.chip .emo { font-size: 1.4em; }
+.badge { display: flex; align-items: center; gap: .5em; padding: .3em 1em .3em .3em; white-space: nowrap; }
+.num { width: 1.55em; height: 1.55em; border-radius: 50%; display: grid; place-items: center; font-family: 'PF'; font-style: italic;
+       font-weight: 900; font-size: 1.35em; color: #0A1A44;
        background: radial-gradient(circle at 35% 28%, #fff 0%, #DCE7FF 30%, #8FB0F5 70%, #4C7BFF 100%);
        box-shadow: 0 0 1em rgba(120,160,255,.6); }
 .blab { font-family: 'Inter'; font-weight: 300; font-size: 1.05em; letter-spacing: -.01em; }
 .blab b { font-family: 'PF'; font-style: italic; font-weight: 900; font-size: 1.25em; }
-.list { display: flex; flex-direction: column; gap: .45em; align-items: stretch; width: 82%; }
-.row2 { display: flex; align-items: center; gap: .6em; padding: .45em .8em; font-family: 'Inter'; font-weight: 600; }
-.row2 .emo { font-size: 1.55em; }
+.list { display: flex; flex-direction: row; gap: .45em; justify-content: center; }
+.row2 { display: flex; align-items: center; gap: .4em; padding: .4em .7em .4em .5em; font-family: 'Inter'; font-weight: 600; }
+.row2 .emo { font-size: 1.4em; }
 .row2 .t { flex: 1; white-space: nowrap; }
 .ck { width: 1.35em; height: 1.35em; border-radius: 50%; display: grid; place-items: center; font-size: .8em; color: #0A1A44;
       background: #9CC0FF; font-weight: 800; animation: popC .5s cubic-bezier(.2,1.6,.4,1) both; }
 @keyframes popC { from { transform: scale(0); } }
-.chart { display: flex; align-items: flex-end; gap: .8em; padding: .8em 1.1em .7em; }
-.chart .info { display: flex; flex-direction: column; gap: .2em; font-family: 'Inter'; margin-right: .4em; }
-.chart .info .emo { font-size: 2.3em; }
-.chart .info .l { font-weight: 300; font-size: .9em; }
-.chart .info .v { font-family: 'PF'; font-style: italic; font-weight: 900; font-size: 1.6em; }
-.bar { width: 1.5em; border-radius: .35em .35em .15em .15em; transform-origin: bottom;
+.chart { display: flex; align-items: center; gap: .45em; padding: .4em .9em .4em .5em; white-space: nowrap; }
+.chart .info { display: flex; flex-direction: row; align-items: center; gap: .4em; font-family: 'Inter'; margin-right: .3em; }
+.chart .info .emo { font-size: 1.4em; }
+.chart .info .l { font-weight: 600; }
+.chart .info .v { font-family: 'PF'; font-style: italic; font-weight: 900; font-size: 1.3em; }
+.bar { align-self: flex-end; margin-bottom: .2em; width: .7em; border-radius: .35em .35em .15em .15em; transform-origin: bottom;
        background: linear-gradient(180deg, #DCE7FF, #4C7BFF); box-shadow: 0 0 .8em rgba(120,160,255,.5);
        animation: grow .9s cubic-bezier(.16,1,.3,1) both; }
 @keyframes grow { from { transform: scaleY(0); } }
@@ -83,28 +83,36 @@ window.setup = () => {
   const wrap = document.getElementById('wrap');
   const D = P.duration;
   // затемнения сверху/снизу (тёмно-синий) — контраст для текста на светлой карте
-  const sc = el('div', 'scrim', wrap); sc.style.height = (H * .36) + 'px';
-  const sb = el('div', 'scrimB', wrap); sb.style.height = (H * .42) + 'px';
+  const sc = el('div', 'scrim', wrap); sc.style.height = (H * .4) + 'px';
 
   for (const c of P.captions || []) {
     const box = el('div', 'cap', wrap);
-    box.style.bottom = (H * (1 - (c.y || .285))) + 'px';
+    box.style.bottom = (H * (1 - (c.y || P.capY || .205))) + 'px';
     box.style.animation = `out .3s cubic-bezier(.6,0,.9,.4) ${c.e - .3}s both`;
+    // строки после акцентной приклеиваем к ней — максимум 2 строки, минимальный интервал
+    const rows = []; let accRow = false;
     for (const line of c.lines) {
+      const hasAcc = line.some(x => x[2]);
+      if (accRow && !hasAcc) rows[rows.length - 1].push(...line); else rows.push([...line]);
+      accRow = accRow || hasAcc;
+    }
+    for (const line of rows) {
       const row = el('div', 'row', box);
-      line.forEach(([t, w, acc], i) => {
-        const s = el('span', acc ? 'aw' : 'sw', row, w + (i < line.length - 1 ? ' ' : ''));
-        s.style.fontSize = (W * (acc ? .135 : .062)) + 'px';
-        s.style.animationDelay = (c.s + t) + 's';
-        if (acc && s.offsetWidth > W * .9) s.style.fontSize = (W * .135 * W * .9 / s.offsetWidth) + 'px';
+      const spans = line.map(([t, w, acc], i) => {
+        const sp = el('span', acc ? 'aw' : 'sw', row, w + (i < line.length - 1 ? ' ' : ''));
+        sp.dataset.fs = W * (acc ? .088 : .046); sp.style.fontSize = sp.dataset.fs + 'px';
+        sp.style.animationDelay = (c.s + t) + 's';
+        return sp;
       });
+      const wsum = spans.reduce((a, x) => a + x.offsetWidth, 0);
+      if (wsum > W * .9) spans.forEach(x => x.style.fontSize = (x.dataset.fs * W * .9 / wsum) + 'px');
     }
   }
 
   for (const ev of P.events || []) {
     const g = el('div', 'grp', wrap);
     g.style.top = (H * (ev.y || .64)) + 'px';
-    g.style.fontSize = (W * (ev.type === 'hero' ? .05 : .05)) + 'px';
+    g.style.fontSize = (W * .037) + 'px'; g.style.flexWrap = 'nowrap'; g.style.gap = '.5em';
     outAt(g, ev.e);
     const delay = (n, t) => { n.style.animationDelay = t + 's'; return n; };
     if (ev.type === 'chips') {
@@ -117,7 +125,6 @@ window.setup = () => {
       el('div', 'num', b, ev.n);
       const l = el('div', 'blab', b); l.innerHTML = ev.label;
     } else if (ev.type === 'list') {
-      g.style.flexDirection = 'column';
       const L = el('div', 'list', g);
       for (const [t, emo, txt] of ev.items) {
         const r = delay(el('div', 'glass row2 in', L), t);
@@ -129,19 +136,15 @@ window.setup = () => {
       const inf = el('div', 'info', c);
       el('span', 'emo', inf, ev.emo); el('span', 'l', inf, ev.label);
       const v = el('span', 'v', inf, ev.value); delay(v, ev.t2); v.className = 'v in';
-      ev.bars.forEach((h, i) => { const b = el('div', 'bar', c); b.style.height = (h * 4.2) + 'em'; delay(b, ev.t2 + i * .12); });
+      ev.bars.forEach((h, i) => { const b = el('div', 'bar', c); b.style.height = (h * 1.5) + 'em'; delay(b, ev.t2 + i * .12); });
     } else if (ev.type === 'hero') {
       for (const [t, emo, txt] of ev.items) {
-        const hb = el('div', 'hero', g);
-        const r = delay(el('div', 'ring', hb), t); r.style.left = '50%'; r.style.marginLeft = '-2.8em'; r.style.top = '-1.1em';
-        hb.style.position = 'relative';
-        const e = el('span', 'emo', hb, emo); e.style.animationDelay = `${t}s, ${t}s`;
-        delay(el('div', 'glass lab in', hb, txt), t + .15);
+        const c = delay(el('div', 'glass chip in', g), t);
+        el('span', 'emo', c, emo); el('span', '', c, txt);
       }
-      (ev.sparks || []).forEach(([x, y, t]) => {
-        const s = delay(el('div', 'spark', g, '✦'), t); s.style.left = x * 100 + '%'; s.style.top = y + 'em'; s.style.fontSize = '1.2em';
-      });
     }
+    const cw = [...g.children].reduce((a, x) => a + x.offsetWidth, 0) + (g.children.length - 1) * W * .02;
+    if (cw > W * .94) g.style.fontSize = (W * .037 * W * .94 / cw) + 'px';
   }
 };
 </script></body></html>

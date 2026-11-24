@@ -68,10 +68,10 @@ EV = [
     {"type": "chips", "s": o(3), "e": o(8) - .05, "items": [[o(4), "🏙️", "Мой город"], [o(7), "🗺️", "Мой регион"]]},
     {"type": "chart", "s": o(11), "e": o(20) - .05, "emo": "👨‍👩‍👧", "label": "Жизнь горожан", "value": "лучше ↑",
      "t2": o(15), "bars": [0.35, 0.55, 0.75, 1.0]},
-    {"type": "badge", "s": o(20), "e": o(26) - .05, "n": "2", "label": "<b>Опыт</b> работы"},
+    {"type": "badge", "s": o(20), "e": o(26) - .05, "n": "2", "label": "<b>Опыт</b>"},
     {"type": "list", "s": o(27), "e": o(36) - .05, "y": .58,
-     "items": [[o(27), "🏭", "Производство"], [o(29), "🔧", "Коммунальная сфера"], [o(34), "🌾", "Сельское хозяйство"]]},
-    {"type": "badge", "s": o(36), "e": o(38) - .05, "n": "3", "label": "<b>Понимание</b> работы"},
+     "items": [[o(27), "🏭", "Производство"], [o(29), "🔧", "ЖКХ"], [o(34), "🌾", "Сельское хозяйство"]]},
+    {"type": "badge", "s": o(36), "e": o(38) - .05, "n": "3", "label": "<b>Понимание</b>"},
     {"type": "chips", "s": o(38), "e": o(41) - .05, "items": [[o(38), "🧠", "Опыт"], [o(40), "💡", "Понимание"]]},
     {"type": "hero", "s": o(44), "e": o(48) - .05, "y": .6, "items": [[o(44, -.1), "🏛️", "Работа депутата"]]},
     {"type": "hero", "s": o(48), "e": omap(17.75) - .02,
@@ -79,7 +79,7 @@ EV = [
 ]
 EV[0]["items"].sort()
 for ev in EV:   # опускаем под лицо: зона груди/стола, выше нижнего интерфейса платформ
-    ev["y"] = {"list": .655, "hero": .655}.get(ev["type"], .71)
+    ev["y"] = .232   # сразу под субтитрами, над головой
 for ev in EV:
     times = [it[0] for it in ev.get("items", [])] or [ev["s"]]
     for t in times:
@@ -124,7 +124,7 @@ edit = {
     "clips": clips,
     "motion": [
         {"template": "question", "start": 0, "duration": INTRO - 0.15, "params": {"mode": "intro", "bg": False}},
-        {"template": "talk", "start": M0, "duration": round(END - M0, 3), "params": {"captions": captions, "events": EV}},
+        {"template": "talk", "start": M0, "duration": round(END - M0, 3), "params": {"captions": captions, "events": EV, "capY": .222}},
     ],
     
     "vignette": 0.15,
