@@ -127,6 +127,8 @@ edit = {
         {"template": "talk", "start": M0, "duration": round(END - M0, 3), "params": {"captions": captions, "events": EV, "capY": .222}},
     ],
     
+    # озвучка вопроса голосом «Дастан» (Higgsfield seed_audio), речь в файле с 0.33 с — слова идут вместе с титром
+    "sfx": {"volume": 1.0, "extra": [{"src": "input/generated/vo_question.wav", "at": 0.1, "volume": 0.8}]},
     "vignette": 0.15,
     "loudness": -14,
 }

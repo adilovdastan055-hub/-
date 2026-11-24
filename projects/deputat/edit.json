@@ -612,6 +612,16 @@
    }
   }
  ],
+ "sfx": {
+  "volume": 1.0,
+  "extra": [
+   {
+    "src": "input/generated/vo_question.wav",
+    "at": 0.1,
+    "volume": 0.8
+   }
+  ]
+ },
  "vignette": 0.15,
  "loudness": -14
 }
