@@ -1,0 +1,147 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_base.css"><style>
+/* Субтитры над головой + инфографика по смыслу речи. Стиль «glass + chrome + serif», тёмно-синяя палитра. */
+@font-face { font-family: 'PF'; font-weight: 800; font-style: normal; src: url(fonts/playfair-display-cyrillic-800-normal.woff2); }
+@font-face { font-family: 'PF'; font-weight: 900; font-style: italic; src: url(fonts/playfair-display-cyrillic-900-italic.woff2); }
+#wrap { animation: none; }
+#pre { position: absolute; left: -9999px; font-family: 'PF'; } #pre i { font-style: italic; font-weight: 900; }
+.scrim { position: absolute; left: 0; right: 0; top: 0; pointer-events: none;
+         background: linear-gradient(180deg, rgba(4,12,38,.88) 0%, rgba(6,18,55,.7) 45%, rgba(6,18,55,0) 100%);
+         animation: fadeIn .5s ease both; }
+.scrimB { position: absolute; left: 0; right: 0; bottom: 0;
+          background: linear-gradient(0deg, rgba(4,12,38,.75) 0%, rgba(6,18,55,.45) 55%, rgba(6,18,55,0) 100%);
+          animation: fadeIn .5s ease both; }
+@keyframes fadeIn { from { opacity: 0; } }
+@keyframes out { to { opacity: 0; transform: translateY(-12%) scale(.96); filter: blur(10px); } }
+
+/* субтитры */
+.cap { position: absolute; left: 4%; right: 4%; text-align: center; color: #fff; display: flex; flex-direction: column;
+       align-items: center; justify-content: flex-end; }
+.cap .row { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; }
+.sw { display: inline-block; white-space: pre; font-family: 'Inter'; font-weight: 500; color: #EAF1FF;
+      text-shadow: 0 .05em .25em rgba(2,8,30,.8); animation: wIn .45s cubic-bezier(.2,.8,.2,1) both; }
+.aw { display: inline-block; white-space: pre; font-family: 'PF'; font-style: italic; font-weight: 900; line-height: 1.05;
+      background: linear-gradient(180deg, #FFFFFF 0%, #DCE7FF 45%, #8FB0F5 62%, #F2F6FF 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent; padding: 0 .08em .06em;
+      filter: drop-shadow(0 .04em .14em rgba(2,8,30,.8));
+      animation: aIn .7s cubic-bezier(.16,1,.3,1) both; }
+@keyframes wIn { from { opacity: 0; transform: translateY(40%); filter: blur(10px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes aIn { from { opacity: 0; transform: translateY(20%) scale(1.35); filter: blur(16px) drop-shadow(0 0 0 transparent); }
+                 to { opacity: 1; transform: none; } }
+
+/* инфографика */
+.grp { position: absolute; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: 3%; }
+.glass { background: linear-gradient(160deg, rgba(30,60,140,.62), rgba(6,16,48,.72));
+         border: 1px solid rgba(190,210,255,.42); border-radius: 1em; backdrop-filter: blur(14px);
+         box-shadow: 0 .7em 1.8em rgba(0,4,25,.55), inset 0 1px 0 rgba(255,255,255,.25); color: #fff; }
+.in { animation: cIn .8s cubic-bezier(.16,1,.3,1) both; }
+@keyframes cIn { from { opacity: 0; transform: translateY(30%) scale(.7); filter: blur(12px); } to { opacity: 1; transform: none; filter: none; } }
+.chip { display: flex; align-items: center; gap: .45em; padding: .45em .9em .5em .55em; font-family: 'Inter'; font-weight: 600; }
+.emo { font-family: 'Noto Color Emoji'; line-height: 1; }
+.chip .emo { font-size: 1.5em; }
+.badge { display: flex; align-items: center; gap: .6em; padding: .4em 1.1em .45em .45em; }
+.num { width: 1.7em; height: 1.7em; border-radius: 50%; display: grid; place-items: center; font-family: 'PF'; font-style: italic;
+       font-weight: 900; font-size: 1.6em; color: #0A1A44;
+       background: radial-gradient(circle at 35% 28%, #fff 0%, #DCE7FF 30%, #8FB0F5 70%, #4C7BFF 100%);
+       box-shadow: 0 0 1em rgba(120,160,255,.6); }
+.blab { font-family: 'Inter'; font-weight: 300; font-size: 1.05em; letter-spacing: -.01em; }
+.blab b { font-family: 'PF'; font-style: italic; font-weight: 900; font-size: 1.25em; }
+.list { display: flex; flex-direction: column; gap: .45em; align-items: stretch; width: 82%; }
+.row2 { display: flex; align-items: center; gap: .6em; padding: .45em .8em; font-family: 'Inter'; font-weight: 600; }
+.row2 .emo { font-size: 1.55em; }
+.row2 .t { flex: 1; white-space: nowrap; }
+.ck { width: 1.35em; height: 1.35em; border-radius: 50%; display: grid; place-items: center; font-size: .8em; color: #0A1A44;
+      background: #9CC0FF; font-weight: 800; animation: popC .5s cubic-bezier(.2,1.6,.4,1) both; }
+@keyframes popC { from { transform: scale(0); } }
+.chart { display: flex; align-items: flex-end; gap: .8em; padding: .8em 1.1em .7em; }
+.chart .info { display: flex; flex-direction: column; gap: .2em; font-family: 'Inter'; margin-right: .4em; }
+.chart .info .emo { font-size: 2.3em; }
+.chart .info .l { font-weight: 300; font-size: .9em; }
+.chart .info .v { font-family: 'PF'; font-style: italic; font-weight: 900; font-size: 1.6em; }
+.bar { width: 1.5em; border-radius: .35em .35em .15em .15em; transform-origin: bottom;
+       background: linear-gradient(180deg, #DCE7FF, #4C7BFF); box-shadow: 0 0 .8em rgba(120,160,255,.5);
+       animation: grow .9s cubic-bezier(.16,1,.3,1) both; }
+@keyframes grow { from { transform: scaleY(0); } }
+.hero { display: flex; flex-direction: column; align-items: center; }
+.hero .emo { font-size: 3.8em; filter: drop-shadow(0 0 .35em rgba(130,170,255,.75)); animation: cIn .8s cubic-bezier(.16,1,.3,1) both, bob 2.6s ease-in-out both; }
+@keyframes bob { 50% { transform: translateY(-6%); } }
+.hero .lab { margin-top: .25em; padding: .3em 1em; font-family: 'Inter'; font-weight: 600; }
+.ring { position: absolute; width: 5.6em; height: 5.6em; border-radius: 50%; border: 2px solid rgba(160,195,255,.6);
+        animation: ring 1.2s ease-out both; }
+@keyframes ring { 0% { transform: scale(.3); opacity: 0; } 8% { opacity: 1; } 100% { transform: scale(1.6); opacity: 0; } }
+.spark { position: absolute; color: #DCE8FF; font-family: 'DejaVu Sans'; text-shadow: 0 0 .5em rgba(160,195,255,.9);
+         animation: tw 1.4s ease-in-out both; }
+@keyframes tw { 0% { opacity: 0; transform: scale(.2) rotate(-40deg); } 40% { opacity: 1; transform: scale(1); } 100% { opacity: .6; transform: scale(.8) rotate(30deg); } }
+</style></head><body><div id="wrap"></div>
+<div id="pre"><i>город</i> <span style="font-family:'Noto Color Emoji'">🏙🏭🌾🔧🏛🏡💡👨‍👩‍👧✨</span></div>
+<script src="_base.js"></script><script>
+// params: captions [{s,e,y,lines:[[ [t,w,acc], ...], ...]}], events [{type,s,e,y,...}]
+function outAt(node, t, extra) {
+  node.style.animation = (extra ? extra + ', ' : '') + `out .35s cubic-bezier(.6,0,.9,.4) ${t - .35}s both`;
+}
+function addAnim(node, anim) { node.style.animation = node.style.animation ? node.style.animation + ', ' + anim : anim; }
+window.setup = () => {
+  const wrap = document.getElementById('wrap');
+  const D = P.duration;
+  // затемнения сверху/снизу (тёмно-синий) — контраст для текста на светлой карте
+  const sc = el('div', 'scrim', wrap); sc.style.height = (H * .36) + 'px';
+  const sb = el('div', 'scrimB', wrap); sb.style.height = (H * .42) + 'px';
+
+  for (const c of P.captions || []) {
+    const box = el('div', 'cap', wrap);
+    box.style.bottom = (H * (1 - (c.y || .285))) + 'px';
+    box.style.animation = `out .3s cubic-bezier(.6,0,.9,.4) ${c.e - .3}s both`;
+    for (const line of c.lines) {
+      const row = el('div', 'row', box);
+      line.forEach(([t, w, acc], i) => {
+        const s = el('span', acc ? 'aw' : 'sw', row, w + (i < line.length - 1 ? ' ' : ''));
+        s.style.fontSize = (W * (acc ? .135 : .062)) + 'px';
+        s.style.animationDelay = (c.s + t) + 's';
+        if (acc && s.offsetWidth > W * .9) s.style.fontSize = (W * .135 * W * .9 / s.offsetWidth) + 'px';
+      });
+    }
+  }
+
+  for (const ev of P.events || []) {
+    const g = el('div', 'grp', wrap);
+    g.style.top = (H * (ev.y || .64)) + 'px';
+    g.style.fontSize = (W * (ev.type === 'hero' ? .05 : .05)) + 'px';
+    outAt(g, ev.e);
+    const delay = (n, t) => { n.style.animationDelay = t + 's'; return n; };
+    if (ev.type === 'chips') {
+      for (const [t, emo, txt] of ev.items) {
+        const c = delay(el('div', 'glass chip in', g), t);
+        el('span', 'emo', c, emo); el('span', '', c, txt);
+      }
+    } else if (ev.type === 'badge') {
+      const b = delay(el('div', 'glass badge in', g), ev.s);
+      el('div', 'num', b, ev.n);
+      const l = el('div', 'blab', b); l.innerHTML = ev.label;
+    } else if (ev.type === 'list') {
+      g.style.flexDirection = 'column';
+      const L = el('div', 'list', g);
+      for (const [t, emo, txt] of ev.items) {
+        const r = delay(el('div', 'glass row2 in', L), t);
+        el('span', 'emo', r, emo); el('span', 't', r, txt);
+        delay(el('span', 'ck', r, '✓'), t + .35);
+      }
+    } else if (ev.type === 'chart') {
+      const c = delay(el('div', 'glass chart in', g), ev.s);
+      const inf = el('div', 'info', c);
+      el('span', 'emo', inf, ev.emo); el('span', 'l', inf, ev.label);
+      const v = el('span', 'v', inf, ev.value); delay(v, ev.t2); v.className = 'v in';
+      ev.bars.forEach((h, i) => { const b = el('div', 'bar', c); b.style.height = (h * 4.2) + 'em'; delay(b, ev.t2 + i * .12); });
+    } else if (ev.type === 'hero') {
+      for (const [t, emo, txt] of ev.items) {
+        const hb = el('div', 'hero', g);
+        const r = delay(el('div', 'ring', hb), t); r.style.left = '50%'; r.style.marginLeft = '-2.8em'; r.style.top = '-1.1em';
+        hb.style.position = 'relative';
+        const e = el('span', 'emo', hb, emo); e.style.animationDelay = `${t}s, ${t}s`;
+        delay(el('div', 'glass lab in', hb, txt), t + .15);
+      }
+      (ev.sparks || []).forEach(([x, y, t]) => {
+        const s = delay(el('div', 'spark', g, '✦'), t); s.style.left = x * 100 + '%'; s.style.top = y + 'em'; s.style.fontSize = '1.2em';
+      });
+    }
+  }
+};
+</script></body></html>
